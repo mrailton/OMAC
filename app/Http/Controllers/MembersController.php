@@ -13,7 +13,7 @@ class MembersController extends Controller
 {
     public function list(Request $request): View
     {
-        $members = Member::query()->orderBy('omac_id_no')->get();
+        $members = Member::query()->orderBy('omac_id_number')->get();
 
         return view('members.list', ['members' => $members]);
     }

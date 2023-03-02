@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\CFRLevel;
+use App\Enums\ClinicalLevel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,5 +19,7 @@ class Member extends Model
         'cfr_expires_on' => 'date',
         'far_expires_on' => 'date',
         'efr_expires_on' => 'date',
+        'clinical_level' => ClinicalLevel::class,
+        'cfr_level' => CFRLevel::class,
     ];
 }

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('far_expires_on')->nullable();
             $table->string('far_cert_number')->nullable();
             $table->date('efr_expires_on')->nullable();
-            $table->string('eft_cert_number')->nullable();
+            $table->string('efr_cert_number')->nullable();
             $table->string('phecc_pin')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

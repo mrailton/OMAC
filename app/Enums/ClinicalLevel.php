@@ -4,6 +4,7 @@ namespace App\Enums;
 
 enum ClinicalLevel: string
 {
+    case NA = 'N/A';
     case CFR = 'CFR';
     case FAR = 'FAR';
     case EFR = 'EFR';

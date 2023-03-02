@@ -4,6 +4,7 @@ namespace App\Enums;
 
 enum CFRLevel: string
 {
-    case CFRA = 'CFR Advanced';
+    case NA = 'N/A';
     case CFRC = 'CFR Community';
+    case CFRA = 'CFR Advanced';
 }

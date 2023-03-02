@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CFRLevel;
+use App\Enums\ClinicalLevel;
 use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
 use App\Models\Member;
@@ -20,12 +22,25 @@ class MembersController extends Controller
 
     public function create(Request $request): View
     {
-        return view('members.create');
+        $cfrLevels = [];
+        $clinicalLevels = [];
+
+        foreach (CFRLevel::cases() as $value) {
+            $cfrLevels[$value->name] = $value->value;
+        }
+
+        foreach(ClinicalLevel::cases() as $value) {
+            $clinicalLevels[$value->name] = $value->value;
+        }
+
+        return view('members.create', ['cfrLevels' => $cfrLevels, 'clinicalLevels' => $clinicalLevels]);
     }
 
     public function store(StoreMemberRequest $request): RedirectResponse
     {
+        Member::create($request->validated());
 
+        return redirect()->route('members:list');
     }
 
     public function show(Request $request, Member $member): View

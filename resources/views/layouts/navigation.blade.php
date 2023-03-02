@@ -8,7 +8,7 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->is('dashboard')">
                         Dashboard
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->is('members*')">
+                    <x-nav-link :href="route('members:list')" :active="request()->is('members*')">
                         Members
                     </x-nav-link>
                 </div>
@@ -66,7 +66,7 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 Dashboard
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('members*')">
+            <x-responsive-nav-link :href="route('members:list')" :active="request()->routeIs('members*')">
                 Members
             </x-responsive-nav-link>
         </div>

@@ -46,4 +46,13 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
         });
     }
+
+    public function report(Throwable $e)
+    {
+        if (app()->bound('honeybadger') && $this->shouldReport($e)) {
+            app('honeybadger')->notify($e, app('request'));
+        }
+
+        parent::report($e);
+    }
 }

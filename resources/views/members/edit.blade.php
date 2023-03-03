@@ -10,8 +10,8 @@
                         <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                             <div class="space-y-6 sm:space-y-5">
                                 <div>
-                                    <h1 class="text-base font-semibold leading-6 text-gray-900">Add Member</h1>
-                                    <p class="mt-2 text-sm text-gray-700">Add a new member.</p>
+                                    <h1 class="text-base font-semibold leading-6 text-gray-900">Update Member</h1>
+                                    <p class="mt-2 text-sm text-gray-700">Update members details.</p>
                                 </div>
 
                                 <div class="space-y-6 sm:space-y-5">

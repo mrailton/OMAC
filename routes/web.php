@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{member:id}', [MembersController::class, 'show'])->name('show');
         Route::put('/{member:id}', [MembersController::class, 'update'])->name('update');
         Route::get('/{member:id}/edit', [MembersController::class, 'edit'])->name('edit');
-        Route::delete('/{member:id}', [MembersController::class, 'delete']);
+        Route::delete('/{member:id}', [MembersController::class, 'delete'])->name('delete');
     });
 });
 

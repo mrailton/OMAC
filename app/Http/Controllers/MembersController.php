@@ -45,7 +45,18 @@ class MembersController extends Controller
 
     public function show(Request $request, Member $member): View
     {
-        return view('members.show', ['member' => $member]);
+        $cfrLevels = [];
+        $clinicalLevels = [];
+
+        foreach (CFRLevel::cases() as $value) {
+            $cfrLevels[$value->name] = $value->value;
+        }
+
+        foreach(ClinicalLevel::cases() as $value) {
+            $clinicalLevels[$value->name] = $value->value;
+        }
+
+        return view('members.show', ['member' => $member, 'cfrLevels' => $cfrLevels, 'clinicalLevels' => $clinicalLevels]);
     }
 
     public function edit(Request $request, Member $member): View

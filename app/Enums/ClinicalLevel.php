@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum ClinicalLevel: string
@@ -8,7 +10,7 @@ enum ClinicalLevel: string
     case CFR = 'CFR';
     case FAR = 'FAR';
     case EFR = 'EFR';
-    CASE EMT = 'EMT';
+    case EMT = 'EMT';
     case PARAMEDIC = 'Paramedic';
     case ADVANCED_PARAMEDIC = 'Advanced Paramedic';
     case NURSE = 'Nurse';

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\CFRLevel;
 use App\Enums\ClinicalLevel;
 use App\Http\Requests\StoreMemberRequest;
-use App\Http\Requests\UpdateMemberRequest;
 use App\Models\Member;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -22,18 +21,7 @@ class MembersController extends Controller
 
     public function create(Request $request): View
     {
-        $cfrLevels = [];
-        $clinicalLevels = [];
-
-        foreach (CFRLevel::cases() as $value) {
-            $cfrLevels[$value->name] = $value->value;
-        }
-
-        foreach(ClinicalLevel::cases() as $value) {
-            $clinicalLevels[$value->name] = $value->value;
-        }
-
-        return view('members.create', ['cfrLevels' => $cfrLevels, 'clinicalLevels' => $clinicalLevels]);
+        return view('members.create', ['cfrLevels' => CFRLevel::toArray(), 'clinicalLevels' => ClinicalLevel::toArray()]);
     }
 
     public function store(StoreMemberRequest $request): RedirectResponse
@@ -45,28 +33,19 @@ class MembersController extends Controller
 
     public function show(Request $request, Member $member): View
     {
-        $cfrLevels = [];
-        $clinicalLevels = [];
-
-        foreach (CFRLevel::cases() as $value) {
-            $cfrLevels[$value->name] = $value->value;
-        }
-
-        foreach(ClinicalLevel::cases() as $value) {
-            $clinicalLevels[$value->name] = $value->value;
-        }
-
-        return view('members.show', ['member' => $member, 'cfrLevels' => $cfrLevels, 'clinicalLevels' => $clinicalLevels]);
+        return view('members.show', ['member' => $member]);
     }
 
     public function edit(Request $request, Member $member): View
     {
-        return view('members.edit', ['member' => $member]);
+        return view('members.edit', ['member' => $member, 'cfrLevels' => CFRLevel::toArray(), 'clinicalLevels' => ClinicalLevel::toArray()]);
     }
 
-    public function update(UpdateMemberRequest $request, Member $member): RedirectResponse
+    public function update(StoreMemberRequest $request, Member $member): RedirectResponse
     {
+        $member->update($request->validated());
 
+        return redirect()->route('members:show', ['member' => $member]);
     }
 
     public function delete(Request $request, Member $member): RedirectResponse

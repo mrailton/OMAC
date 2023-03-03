@@ -43,7 +43,7 @@
                                         <tr>
                                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ $member->name }}</td>
                                             <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500">{{ $member->omac_id_number }}</td>
-                                            <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500">{{ $member->clinical_level }}</td>
+                                            <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500">{{ $member->clinical_level->value }}</td>
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                                                 <a href="{{ route('members:show', ['member' => $member]) }}"
                                                    class="text-red-600 hover:text-red-900">View<span

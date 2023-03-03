@@ -12,4 +12,15 @@ enum ClinicalLevel: string
     case PARAMEDIC = 'Paramedic';
     case ADVANCED_PARAMEDIC = 'Advanced Paramedic';
     case NURSE = 'Nurse';
+
+    public static function toArray(): array
+    {
+        $clinicalLevels = [];
+
+        foreach (ClinicalLevel::cases() as $value) {
+            $clinicalLevels[$value->name] = $value->value;
+        }
+
+        return $clinicalLevels;
+    }
 }

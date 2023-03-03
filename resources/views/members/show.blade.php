@@ -45,7 +45,7 @@
                                     <div class="mt-2 sm:col-span-2 sm:mt-0">
                                         <div class="flex max-w-lg">
                                             <span class="block w-full min-w-0 flex-1 py-1.5 pl-3 text-gray-900 sm:text-sm sm:leading-6">
-                                                {{ $member->clinical_level }}
+                                                {{ $member->clinical_level->value }}
                                             </span>
                                         </div>
                                     </div>
@@ -56,7 +56,7 @@
                                     <div class="mt-2 sm:col-span-2 sm:mt-0">
                                         <div class="flex max-w-lg">
                                             <span class="block w-full min-w-0 flex-1 py-1.5 pl-3 text-gray-900 sm:text-sm sm:leading-6">
-                                                {{ $member->cfr_level }}
+                                                {{ $member->cfr_level->value }}
                                             </span>
                                         </div>
                                     </div>

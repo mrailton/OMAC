@@ -11,7 +11,7 @@
                                 level.</p>
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                            <a href="{{ route('members:create') }}" type="button"
+                            <a href="{{ route('members.create') }}" type="button"
                                class="block bg-red-600 py-2 px-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Add
                                 Member</a>
                         </div>
@@ -45,7 +45,7 @@
                                             <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500">{{ $member->omac_id_number }}</td>
                                             <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500">{{ $member->clinical_level->value }}</td>
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                                <a href="{{ route('members:show', ['member' => $member]) }}"
+                                                <a href="{{ route('members.show', ['member' => $member]) }}"
                                                    class="text-red-600 hover:text-red-900">View<span
                                                         class="sr-only">, {{ $member->name }}</span></a>
                                             </td>

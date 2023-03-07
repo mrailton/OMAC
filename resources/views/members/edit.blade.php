@@ -3,7 +3,7 @@
         <div class="bg-white overflow-hidden shadow-sm">
             <div class="p-6 text-gray-900">
                 <div class="px-4 sm:px-6 lg:px-8">
-                    <form action="{{ route('members:update', ['member' => $member]) }}" method="post">
+                    <form action="{{ route('members.update', ['member' => $member]) }}" method="post">
                         @csrf
                         @method('PUT')
 
@@ -168,7 +168,7 @@
 
                         <div class="pt-5">
                             <div class="flex justify-end gap-x-3">
-                                <a href="{{ route('members:show', ['member' => $member]) }}" type="button"
+                                <a href="{{ route('members.show', ['member' => $member]) }}" type="button"
                                         class="rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                                     Cancel
                                 </a>

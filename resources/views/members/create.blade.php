@@ -3,7 +3,7 @@
         <div class="bg-white overflow-hidden shadow-sm">
             <div class="p-6 text-gray-900">
                 <div class="px-4 sm:px-6 lg:px-8">
-                    <form action="{{ route('members:store') }}" method="post">
+                    <form action="{{ route('members.store') }}" method="post">
                         @csrf
                         <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                             <div class="space-y-6 sm:space-y-5">

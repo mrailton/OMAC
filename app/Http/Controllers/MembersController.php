@@ -30,7 +30,7 @@ class MembersController extends Controller
     {
         Member::create($request->validated());
 
-        return redirect()->route('members:list');
+        return redirect()->route('members.list');
     }
 
     public function show(Request $request, Member $member): View
@@ -47,13 +47,13 @@ class MembersController extends Controller
     {
         $member->update($request->validated());
 
-        return redirect()->route('members:show', ['member' => $member]);
+        return redirect()->route('members.show', ['member' => $member]);
     }
 
     public function delete(Request $request, Member $member): RedirectResponse
     {
         $member->delete();
 
-        return redirect()->route('members:list');
+        return redirect()->route('members.list');
     }
 }

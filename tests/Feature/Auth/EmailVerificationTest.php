@@ -16,6 +16,16 @@ test('email verification screen can be rendered', function () {
     $response->assertStatus(200);
 });
 
+test('email verification screen does not render if email already verified', function () {
+    $user = User::factory()->create([
+        'email_verified_at' => now(),
+    ]);
+
+    $response = $this->actingAs($user)->get('/verify-email');
+
+    $response->assertRedirect(RouteServiceProvider::HOME);
+});
+
 test('email can be verified', function () {
     $user = User::factory()->create([
         'email_verified_at' => null,
@@ -32,6 +42,26 @@ test('email can be verified', function () {
     $response = $this->actingAs($user)->get($verificationUrl);
 
     Event::assertDispatched(Verified::class);
+    expect($user->fresh()->hasVerifiedEmail())->toBeTrue();
+    $response->assertRedirect(RouteServiceProvider::HOME.'?verified=1');
+});
+
+test('redirects if email already verified', function () {
+    $user = User::factory()->create([
+        'email_verified_at' => now(),
+    ]);
+
+    Event::fake();
+
+    $verificationUrl = URL::temporarySignedRoute(
+        'verification.verify',
+        now()->addMinutes(60),
+        ['id' => $user->id, 'hash' => sha1($user->email)]
+    );
+
+    $response = $this->actingAs($user)->get($verificationUrl);
+
+    Event::assertNotDispatched(Verified::class);
     expect($user->fresh()->hasVerifiedEmail())->toBeTrue();
     $response->assertRedirect(RouteServiceProvider::HOME.'?verified=1');
 });

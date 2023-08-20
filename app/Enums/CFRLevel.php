@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum CFRLevel: string
+use Filament\Support\Contracts\HasLabel;
+
+enum CFRLevel: string implements HasLabel
 {
     case NA = 'N/A';
     case CFRC = 'CFR Community';
     case CFRA = 'CFR Advanced';
 
-    public static function toArray(): array
+    public function getLabel(): ?string
     {
-        $cfrLevels = [];
-
-        foreach (CFRLevel::cases() as $value) {
-            $cfrLevels[$value->name] = $value->value;
-        }
-
-        return $cfrLevels;
+        return $this->value;
     }
 }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum ClinicalLevel: string
+use Filament\Support\Contracts\HasLabel;
+
+enum ClinicalLevel: string implements HasLabel
 {
     case NA = 'N/A';
     case CFR = 'CFR';
@@ -20,14 +22,8 @@ enum ClinicalLevel: string
     case NURSE = 'Nurse';
     case DOCTOR = 'Doctor';
 
-    public static function toArray(): array
+    public function getLabel(): ?string
     {
-        $clinicalLevels = [];
-
-        foreach (ClinicalLevel::cases() as $value) {
-            $clinicalLevels[$value->name] = $value->value;
-        }
-
-        return $clinicalLevels;
+        return $this->value;
     }
 }

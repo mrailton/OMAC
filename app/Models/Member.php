@@ -6,6 +6,7 @@ use App\Enums\CFRLevel;
 use App\Enums\ClinicalLevel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model
@@ -23,4 +24,9 @@ class Member extends Model
         'clinical_level' => ClinicalLevel::class,
         'cfr_level' => CFRLevel::class,
     ];
+
+    public function notes(): HasMany
+    {
+        return $this->hasMany(MemberNote::class);
+    }
 }

@@ -7,7 +7,6 @@ use App\Enums\ClinicalLevel;
 use App\Filament\Resources\MemberResource\Pages;
 use App\Filament\Resources\MemberResource\RelationManagers;
 use App\Models\Member;
-use Faker\Provider\Text;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -19,7 +18,6 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class MemberResource extends Resource
 {
     protected static ?string $model = Member::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -27,7 +25,7 @@ class MemberResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')->required(),
-                Forms\Components\TextInput::make('omac_id')->label('OMAC ID'),
+                Forms\Components\TextInput::make('omac_id_number')->label('OMAC ID'),
                 Forms\Components\Select::make('clinical_level')->options(ClinicalLevel::class)->label('Clinical Level')->required(),
                 Forms\Components\TextInput::make('cert_number')->label('Clinical Level Certificate Number'),
                 Forms\Components\DatePicker::make('cert_expires_on')->label('Clinical Level Certificate Expiry'),
@@ -44,13 +42,16 @@ class MemberResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('omac_id')->label('OMAC ID'),
-                Tables\Columns\TextColumn::make('clinical_level')->label('Clinical Level'),
-                Tables\Columns\TextColumn::make('cfr_level')->label('CFR Level'),
+                Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('omac_id_number')->sortable()->searchable()->label('OMAC ID'),
+                Tables\Columns\TextColumn::make('clinical_level')->sortable()->searchable()->label('Clinical Level'),
+                Tables\Columns\TextColumn::make('cfr_level')->sortable()->searchable()->label('CFR Level'),
             ])
+            ->defaultSort('name', 'asc')
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
+                Tables\Filters\SelectFilter::make('cfr_level')->options(CFRLevel::class)->label('CFR Level'),
+                Tables\Filters\SelectFilter::make('clinical_level')->options(ClinicalLevel::class)->label('Clinical Level'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

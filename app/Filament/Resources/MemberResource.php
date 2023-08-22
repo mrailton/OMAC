@@ -14,6 +14,7 @@ use App\Filament\Resources\MemberResource\Pages\ViewMember;
 use App\Filament\Resources\MemberResource\RelationManagers\NotesRelationManager;
 use App\Models\Member;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -52,6 +53,17 @@ class MemberResource extends Resource
                 TextInput::make('garda_vetting_id')->label('Garda Vetting Number'),
                 DatePicker::make('garda_vetting_date')->label('Garda Vetting Date'),
                 DatePicker::make('cpap_date')->label('CPAP Date'),
+                FileUpload::make('files')
+                    ->multiple()
+                    ->disk('s3')
+                    ->directory('member-files')
+                    ->visibility('private')
+                    ->storeFileNamesIn('original_file_names')
+                    ->openable()
+                    ->downloadable()
+                    ->previewable(false)
+                    ->reorderable()
+                    ->appendFiles()
             ]);
     }
 

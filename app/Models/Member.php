@@ -15,7 +15,7 @@ class Member extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['name', 'omac_id_number', 'rank', 'clinical_level', 'cfr_level', 'cfr_expires_on', 'cfr_cert_number', 'cert_expires_on', 'cert_number', 'garda_vetting_date', 'garda_vetting_id', 'cpap_date'];
+    protected $fillable = ['name', 'omac_id_number', 'rank', 'clinical_level', 'cfr_level', 'cfr_expires_on', 'cfr_cert_number', 'cert_expires_on', 'cert_number', 'garda_vetting_date', 'garda_vetting_id', 'cpap_date', 'files', 'original_file_names'];
 
     protected $casts = [
         'cert_expires_on' => 'date',
@@ -25,6 +25,8 @@ class Member extends Model
         'clinical_level' => ClinicalLevel::class,
         'cfr_level' => CFRLevel::class,
         'rank' => Rank::class,
+        'files' => 'array',
+        'original_file_names' => 'array',
     ];
 
     public function notes(): HasMany

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\MemberResource\Pages;
 
 use App\Filament\Resources\MemberResource;
 use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewMember extends ViewRecord
@@ -13,7 +14,7 @@ class ViewMember extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            EditAction::make(),
         ];
     }
 }

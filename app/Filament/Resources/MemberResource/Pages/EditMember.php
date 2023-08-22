@@ -4,6 +4,10 @@ namespace App\Filament\Resources\MemberResource\Pages;
 
 use App\Filament\Resources\MemberResource;
 use Filament\Actions;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditMember extends EditRecord
@@ -13,10 +17,10 @@ class EditMember extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
-            Actions\ForceDeleteAction::make(),
-            Actions\RestoreAction::make(),
+            ViewAction::make(),
+            DeleteAction::make(),
+            ForceDeleteAction::make(),
+            RestoreAction::make(),
         ];
     }
 

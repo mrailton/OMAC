@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('omac_id_number')->nullable();
+            $table->string('rank')->default('Volunteer');
             $table->string('clinical_level');
             $table->string('cfr_level')->nullable();
             $table->date('cfr_expires_on')->nullable();

@@ -12,6 +12,7 @@ use App\Filament\Resources\MemberResource\Pages\EditMember;
 use App\Filament\Resources\MemberResource\Pages\ListMembers;
 use App\Filament\Resources\MemberResource\Pages\ViewMember;
 use App\Filament\Resources\MemberResource\RelationManagers\NotesRelationManager;
+use App\Filament\Resources\MemberResource\RelationManagers\TrainingSessionsRelationManager;
 use App\Models\Member;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -46,13 +47,13 @@ class MemberResource extends Resource
                 Select::make('rank')->options(Rank::class)->required(),
                 Select::make('clinical_level')->options(ClinicalLevel::class)->label('Clinical Level')->required(),
                 TextInput::make('cert_number')->label('Clinical Level Certificate Number'),
-                DatePicker::make('cert_expires_on')->label('Clinical Level Certificate Expiry'),
+                DatePicker::make('cert_expires_on')->label('Clinical Level Certificate Expiry')->native(false),
                 Select::make('cfr_level')->options(CFRLevel::class)->label('CFR Level')->required(),
                 TextInput::make('cfr_cert_number')->label('CFR Certificate Number'),
-                DatePicker::make('cfr_expires_on')->label('CFR Certificate Expiry'),
+                DatePicker::make('cfr_expires_on')->label('CFR Certificate Expiry')->native(false),
                 TextInput::make('garda_vetting_id')->label('Garda Vetting Number'),
-                DatePicker::make('garda_vetting_date')->label('Garda Vetting Date'),
-                DatePicker::make('cpap_date')->label('CPAP Date'),
+                DatePicker::make('garda_vetting_date')->label('Garda Vetting Date')->native(false),
+                DatePicker::make('cpap_date')->label('CPAP Date')->native(false),
                 FileUpload::make('files')
                     ->multiple()
                     ->disk('s3')
@@ -103,6 +104,7 @@ class MemberResource extends Resource
     {
         return [
             NotesRelationManager::class,
+            TrainingSessionsRelationManager::class,
         ];
     }
 

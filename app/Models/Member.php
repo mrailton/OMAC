@@ -7,7 +7,9 @@ use App\Enums\ClinicalLevel;
 use App\Enums\Rank;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model
@@ -32,5 +34,10 @@ class Member extends Model
     public function notes(): HasMany
     {
         return $this->hasMany(MemberNote::class);
+    }
+
+    public function trainingSessions(): BelongsToMany
+    {
+        return $this->belongsToMany(TrainingSession::class);
     }
 }

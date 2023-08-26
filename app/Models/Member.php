@@ -40,4 +40,9 @@ class Member extends Model
     {
         return $this->belongsToMany(TrainingSession::class);
     }
+
+    public function duties(): BelongsToMany
+    {
+        return $this->belongsToMany(Duty::class);
+    }
 }

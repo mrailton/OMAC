@@ -11,6 +11,7 @@ use App\Filament\Resources\MemberResource\Pages\CreateMember;
 use App\Filament\Resources\MemberResource\Pages\EditMember;
 use App\Filament\Resources\MemberResource\Pages\ListMembers;
 use App\Filament\Resources\MemberResource\Pages\ViewMember;
+use App\Filament\Resources\MemberResource\RelationManagers\DutiesRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\NotesRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\TrainingSessionsRelationManager;
 use App\Models\Member;
@@ -94,9 +95,6 @@ class MemberResource extends Resource
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
-            ])
-            ->emptyStateActions([
-                CreateAction::make(),
             ]);
     }
 
@@ -105,6 +103,7 @@ class MemberResource extends Resource
         return [
             NotesRelationManager::class,
             TrainingSessionsRelationManager::class,
+            DutiesRelationManager::class,
         ];
     }
 

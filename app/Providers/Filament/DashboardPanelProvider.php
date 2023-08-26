@@ -27,6 +27,8 @@ class DashboardPanelProvider extends PanelProvider
             ->id('dashboard')
             ->path('')
             ->login()
+            ->passwordReset()
+            ->profile()
             ->colors([
                 'primary' => Color::Red,
             ])

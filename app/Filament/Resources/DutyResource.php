@@ -50,7 +50,6 @@ class DutyResource extends Resource
                     ->relationship('vehicles', 'call_sign')
                     ->preload()
                     ->multiple()
-                    ->required()
                     ->label('Vehicles'),
                 Textarea::make('notes')
                     ->maxLength(65535)

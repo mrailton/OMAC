@@ -7,9 +7,6 @@ use Spatie\CpuLoadHealthCheck\CpuLoadCheck;
 use Spatie\Health\Checks\Checks\CacheCheck;
 use Spatie\Health\Checks\Checks\DatabaseCheck;
 use Spatie\Health\Checks\Checks\DatabaseConnectionCountCheck;
-use Spatie\Health\Checks\Checks\DebugModeCheck;
-use Spatie\Health\Checks\Checks\EnvironmentCheck;
-use Spatie\Health\Checks\Checks\HorizonCheck;
 use Spatie\Health\Checks\Checks\OptimizedAppCheck;
 use Spatie\Health\Checks\Checks\RedisCheck;
 use Spatie\Health\Checks\Checks\ScheduleCheck;
@@ -34,8 +31,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Health::checks([
+            OptimizedAppCheck::new(),
             CacheCheck::new(),
-            EnvironmentCheck::new(),
             CpuLoadCheck::new()
                 ->failWhenLoadIsHigherInTheLast5Minutes(3.0)
                 ->failWhenLoadIsHigherInTheLast15Minutes(2.5),

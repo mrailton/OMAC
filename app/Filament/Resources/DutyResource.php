@@ -37,8 +37,10 @@ class DutyResource extends Resource
                     ->required()
                     ->maxLength(255),
                 DateTimePicker::make('start')
+                    ->seconds(false)
                     ->required(),
                 DateTimePicker::make('end')
+                    ->seconds(false)
                     ->required(),
                 Select::make('members')
                     ->relationship('members', 'name')

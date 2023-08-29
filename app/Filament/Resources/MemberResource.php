@@ -27,6 +27,7 @@ use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -81,10 +82,11 @@ class MemberResource extends Resource
             ->defaultSort('name')
             ->filters([
                 TrashedFilter::make(),
-                SelectFilter::make('rank')->options(Rank::class),
+                SelectFilter::make('rank')->options(Rank::class)->multiple(),
                 SelectFilter::make('cfr_level')->options(CFRLevel::class)->label('CFR Level'),
-                SelectFilter::make('clinical_level')->options(ClinicalLevel::class)->label('Clinical Level'),
-            ])
+                SelectFilter::make('clinical_level')->options(ClinicalLevel::class)->label('Clinical Level')->multiple(),
+            ], layout: FiltersLayout::AboveContentCollapsible)
+            ->filtersFormColumns(4)
             ->actions([
                 ViewAction::make(),
             ])

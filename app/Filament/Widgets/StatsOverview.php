@@ -15,13 +15,16 @@ class StatsOverview extends BaseWidget
         $duties = Duty::query()->with('members')->whereYear('start', '=', now()->format('Y'))->get();
 
         foreach ($duties as $duty) {
-            $duration = $duty->end->diffInHours($duty->start);
+            if ($duty->members()->count() > 0) {
+                $duration = $duty->end->diffInHours($duty->start);
 
-            $dutyHours += ($duration * $duty->members()->count());
+                $dutyHours += ($duration * $duty->members()->count());
+            }
         }
 
         return [
             Stat::make('Total Members', Member::query()->count()),
+            Stat::make('Active Members', Member::query()->where('active', '=', true)->count()),
             Stat::make('Duties This Year', $duties->count()),
             Stat::make('Duty Hours This Year', $dutyHours),
         ];

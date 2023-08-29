@@ -15,6 +15,7 @@ use App\Filament\Resources\MemberResource\RelationManagers\DutiesRelationManager
 use App\Filament\Resources\MemberResource\RelationManagers\NotesRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\TrainingSessionsRelationManager;
 use App\Models\Member;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -26,6 +27,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
@@ -55,6 +57,7 @@ class MemberResource extends Resource
                 TextInput::make('garda_vetting_id')->label('Garda Vetting Number'),
                 DatePicker::make('garda_vetting_date')->label('Garda Vetting Date')->native(false),
                 DatePicker::make('cpap_date')->label('CPAP Date')->native(false),
+                Checkbox::make('active'),
                 FileUpload::make('files')
                     ->multiple()
                     ->disk('s3')
@@ -65,7 +68,7 @@ class MemberResource extends Resource
                     ->downloadable()
                     ->previewable(false)
                     ->reorderable()
-                    ->appendFiles()
+                    ->appendFiles(),
             ]);
     }
 
@@ -78,6 +81,10 @@ class MemberResource extends Resource
                 TextColumn::make('rank')->sortable()->searchable(),
                 TextColumn::make('clinical_level')->sortable()->searchable()->label('Clinical Level'),
                 TextColumn::make('cfr_level')->sortable()->searchable()->label('CFR Level'),
+                IconColumn::make('active')->icon(fn(bool $state): string => match ($state) {
+                    true => 'heroicon-o-check-badge',
+                    false => 'heroicon-o-no-symbol',
+                }),
             ])
             ->defaultSort('name')
             ->filters([
@@ -85,8 +92,9 @@ class MemberResource extends Resource
                 SelectFilter::make('rank')->options(Rank::class)->multiple(),
                 SelectFilter::make('cfr_level')->options(CFRLevel::class)->label('CFR Level'),
                 SelectFilter::make('clinical_level')->options(ClinicalLevel::class)->label('Clinical Level')->multiple(),
+                SelectFilter::make('active')->options([0 => 'No', 1 => 'Yes']),
             ], layout: FiltersLayout::AboveContentCollapsible)
-            ->filtersFormColumns(4)
+            ->filtersFormColumns(5)
             ->actions([
                 ViewAction::make(),
             ])

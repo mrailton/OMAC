@@ -46,7 +46,6 @@ class DutyResource extends Resource
                     ->relationship('members', 'name')
                     ->preload()
                     ->multiple()
-                    ->required()
                     ->label('Crew'),
                 Select::make('vehicles')
                     ->relationship('vehicles', 'call_sign')
@@ -84,7 +83,8 @@ class DutyResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('start');
     }
 
     public static function getRelations(): array

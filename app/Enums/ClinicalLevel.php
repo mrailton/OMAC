@@ -10,9 +10,7 @@ enum ClinicalLevel: string implements HasLabel
 {
     case NA = 'N/A';
     case CFR = 'CFR';
-    case STUDENT_FAT = 'Student FAR';
     case FAR = 'FAR';
-    case STUDENT_EFR = 'Student EFR';
     case EFR = 'EFR';
     case STUDENT_EMT = 'Student EMT';
     case EMT = 'EMT';

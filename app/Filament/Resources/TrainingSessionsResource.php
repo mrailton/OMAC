@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\TrainingSessionsResource\Pages;
 use App\Filament\Resources\TrainingSessionsResource\RelationManagers;
 use App\Models\TrainingSession;
-use App\Models\TrainingSessions;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -28,7 +27,7 @@ class TrainingSessionsResource extends Resource
     {
         return $form
             ->schema([
-                DatePicker::make('date')->native(false),
+                DatePicker::make('date')->native(false)->default(now()),
                 TextInput::make('topic'),
                 Textarea::make('notes'),
                 Select::make('members')

@@ -58,6 +58,7 @@ class MemberResource extends Resource
                 DatePicker::make('garda_vetting_date')->label('Garda Vetting Date')->native(false),
                 DatePicker::make('cpap_date')->label('CPAP Date')->native(false),
                 Checkbox::make('active'),
+                Checkbox::make('driver'),
                 FileUpload::make('files')
                     ->multiple()
                     ->disk('s3')
@@ -85,6 +86,10 @@ class MemberResource extends Resource
                     true => 'heroicon-o-check-badge',
                     false => 'heroicon-o-no-symbol',
                 }),
+                IconColumn::make('driver')->icon(fn(bool $state): string => match ($state) {
+                    true => 'heroicon-o-truck',
+                    false => 'heroicon-o-no-symbol',
+                }),
             ])
             ->defaultSort('name')
             ->filters([
@@ -93,8 +98,9 @@ class MemberResource extends Resource
                 SelectFilter::make('cfr_level')->options(CFRLevel::class)->label('CFR Level'),
                 SelectFilter::make('clinical_level')->options(ClinicalLevel::class)->label('Clinical Level')->multiple(),
                 SelectFilter::make('active')->options([0 => 'No', 1 => 'Yes']),
+                SelectFilter::make('driver')->options([0 => 'No', 1 => 'Yes']),
             ], layout: FiltersLayout::AboveContentCollapsible)
-            ->filtersFormColumns(5)
+            ->filtersFormColumns(6)
             ->actions([
                 ViewAction::make(),
             ])

@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Spatie\Health\Commands\ScheduleCheckHeartbeatCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,6 +15,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('backup:clean')->dailyAt('03:15');
         $schedule->command('backup:run')->dailyAt('03:30');
+        $schedule->command(ScheduleCheckHeartbeatCommand::class)->everyMinute();
     }
 
     /**

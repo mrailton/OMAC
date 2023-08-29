@@ -21,3 +21,5 @@ host('app.markrailton.com')
 // Hooks
 
 after('deploy:failed', 'deploy:unlock');
+
+after('deploy:publish', 'deploy:cleanup');

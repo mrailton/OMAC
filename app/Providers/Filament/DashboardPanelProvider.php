@@ -17,6 +17,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Tapp\FilamentAuthenticationLog\FilamentAuthenticationLogPlugin;
 
 class DashboardPanelProvider extends PanelProvider
 {
@@ -24,7 +25,7 @@ class DashboardPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('dashboard')
+            ->id('admin')
             ->path('')
             ->login()
             ->passwordReset()
@@ -56,6 +57,7 @@ class DashboardPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentShieldPlugin::make(),
+                FilamentAuthenticationLogPlugin::make(),
             ]);
     }
 }

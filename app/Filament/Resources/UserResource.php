@@ -20,11 +20,12 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
+use Tapp\FilamentAuthenticationLog\RelationManagers\AuthenticationLogsRelationManager;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
-
+//    protected static ?string $slug = 'users';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -79,6 +80,7 @@ class UserResource extends Resource
     {
         return [
             AuditsRelationManager::class,
+            AuthenticationLogsRelationManager::class,
         ];
     }
 

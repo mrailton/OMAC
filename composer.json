@@ -10,8 +10,10 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
+        "laravel/slack-notification-channel": "^3.0",
         "laravel/tinker": "^2.8",
-        "league/flysystem-aws-s3-v3": "^3.0"
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "spatie/laravel-backup": "^8.3"
     },
     "require-dev": {
         "deployer/deployer": "^7.3",

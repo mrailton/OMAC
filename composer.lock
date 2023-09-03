@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6967900b6458b56b81c4d31e91e635f6",
+    "content-hash": "ac0a283de4224c7b0bc004236f60696a",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -11731,8 +11731,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "bezhansalleh/filament-shield": 10,
-        "tapp/filament-authentication-log": 20
+        "bezhansalleh/filament-shield": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,

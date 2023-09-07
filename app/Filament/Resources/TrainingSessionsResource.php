@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TrainingSessionsResource\Pages;
-use App\Filament\Resources\TrainingSessionsResource\RelationManagers;
 use App\Models\TrainingSession;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -16,7 +15,6 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
 class TrainingSessionsResource extends Resource
 {
@@ -58,13 +56,6 @@ class TrainingSessionsResource extends Resource
                     DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            AuditsRelationManager::class,
-        ];
     }
 
     public static function getPages(): array

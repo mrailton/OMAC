@@ -19,7 +19,6 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 use Tapp\FilamentAuthenticationLog\RelationManagers\AuthenticationLogsRelationManager;
 
 class UserResource extends Resource
@@ -78,7 +77,6 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            AuditsRelationManager::class,
             AuthenticationLogsRelationManager::class,
         ];
     }

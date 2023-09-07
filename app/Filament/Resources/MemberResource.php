@@ -35,7 +35,6 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
 class MemberResource extends Resource
 {
@@ -120,7 +119,6 @@ class MemberResource extends Resource
             NotesRelationManager::class,
             TrainingSessionsRelationManager::class,
             DutiesRelationManager::class,
-            AuditsRelationManager::class,
         ];
     }
 

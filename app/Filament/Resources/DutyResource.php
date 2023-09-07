@@ -6,7 +6,6 @@ use App\Filament\Resources\DutyResource\Pages\CreateDuty;
 use App\Filament\Resources\DutyResource\Pages\EditDuty;
 use App\Filament\Resources\DutyResource\Pages\ListDuties;
 use App\Filament\Resources\DutyResource\Pages\ViewDuty;
-use App\Filament\Resources\DutyResource\RelationManagers;
 use App\Models\Duty;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
@@ -19,7 +18,6 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
 class DutyResource extends Resource
 {
@@ -86,13 +84,6 @@ class DutyResource extends Resource
                 ]),
             ])
             ->defaultSort('start');
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            AuditsRelationManager::class,
-        ];
     }
 
     public static function getPages(): array

@@ -82,14 +82,8 @@ class MemberResource extends Resource
                 TextColumn::make('rank')->sortable()->searchable(),
                 TextColumn::make('clinical_level')->sortable()->searchable()->label('Clinical Level'),
                 TextColumn::make('cfr_level')->sortable()->searchable()->label('CFR Level'),
-                IconColumn::make('active')->icon(fn(bool $state): string => match ($state) {
-                    true => 'heroicon-o-check-badge',
-                    false => 'heroicon-o-no-symbol',
-                }),
-                IconColumn::make('driver')->icon(fn(bool $state): string => match ($state) {
-                    true => 'heroicon-o-truck',
-                    false => 'heroicon-o-no-symbol',
-                }),
+                IconColumn::make('active')->boolean(),
+                IconColumn::make('driver')->boolean(),
             ])
             ->defaultSort('name')
             ->filters([

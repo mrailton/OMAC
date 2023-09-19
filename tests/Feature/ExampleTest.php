@@ -1,19 +1,11 @@
 <?php
 
-namespace Tests\Feature;
+use App\Models\User;
+use function Pest\Laravel\actingAs;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+test('the application returns a successful response', function () {
+    actingAs(User::factory()->create());
+    $response = $this->get('/');
 
-class ExampleTest extends TestCase
-{
-    /**
-     * A basic test example.
-     */
-    public function test_the_application_returns_a_successful_response(): void
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
-}
+    $response->assertStatus(200);
+});

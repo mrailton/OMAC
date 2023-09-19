@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Observers;
 
 use App\Models\Member;
@@ -25,7 +27,7 @@ class MemberObserver
             $newFieldContents = $member->files;
 
             foreach ($originalFieldContents as $file) {
-                if (!in_array($file, $newFieldContents)) {
+                if ( ! in_array($file, $newFieldContents)) {
                     Storage::disk('s3')->delete($file);
                 }
             }
@@ -37,7 +39,7 @@ class MemberObserver
      */
     public function deleted(Member $member): void
     {
-        if (!is_null($member->files)) {
+        if (null !== $member->files) {
             foreach ($member->files as $file) {
                 Storage::disk('s3')->delete($file);
             }

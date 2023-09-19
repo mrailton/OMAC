@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     // The database table name
     // You can change this if the database keys get too long for your driver

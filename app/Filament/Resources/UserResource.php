@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Resources\UserResource\Pages\EditUser;
 use App\Filament\Resources\UserResource\Pages\ListUsers;
 use App\Filament\Resources\UserResource\Pages\ViewUser;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -39,8 +40,8 @@ class UserResource extends Resource
                     ->maxLength(255),
                 TextInput::make('password')
                     ->password()
-                    ->required(fn(Page $livewire) => $livewire instanceof CreateUser)
-                    ->disabled(fn(Page $livewire) => $livewire instanceof EditUser)
+                    ->required(fn (Page $livewire) => $livewire instanceof CreateUser)
+                    ->disabled(fn (Page $livewire) => $livewire instanceof EditUser)
                     ->maxLength(255),
                 Select::make('roles')
                     ->relationship('roles', 'name')

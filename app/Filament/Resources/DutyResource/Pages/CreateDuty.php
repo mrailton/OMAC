@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\DutyResource\Pages;
 
 use App\Filament\Resources\DutyResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateDuty extends CreateRecord

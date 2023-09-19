@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
@@ -13,7 +15,6 @@ use Spatie\Health\Checks\Checks\ScheduleCheck;
 use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
 use Spatie\Health\Facades\Health;
 use Spatie\SecurityAdvisoriesHealthCheck\SecurityAdvisoriesCheck;
-
 
 class AppServiceProvider extends ServiceProvider
 {

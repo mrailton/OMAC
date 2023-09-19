@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Shield\RoleResource\Pages;
 
 use App\Filament\Resources\Shield\RoleResource;
@@ -11,15 +13,12 @@ use Illuminate\Support\Str;
 
 class CreateRole extends CreateRecord
 {
-    protected static string $resource = RoleResource::class;
-
     public Collection $permissions;
+    protected static string $resource = RoleResource::class;
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $this->permissions = collect($data)->filter(function ($permission, $key) {
-            return ! in_array($key, ['name', 'guard_name', 'select_all']) && Str::contains($key, '_');
-        })->keys();
+        $this->permissions = collect($data)->filter(fn ($permission, $key) => ! in_array($key, ['name', 'guard_name', 'select_all']) && Str::contains($key, '_'))->keys();
 
         return Arr::only($data, ['name', 'guard_name']);
     }
@@ -27,7 +26,7 @@ class CreateRole extends CreateRecord
     protected function afterCreate(): void
     {
         $permissionModels = collect();
-        $this->permissions->each(function ($permission) use ($permissionModels) {
+        $this->permissions->each(function ($permission) use ($permissionModels): void {
             $permissionModels->push(Utils::getPermissionModel()::firstOrCreate([
                 /** @phpstan-ignore-next-line */
                 'name' => $permission,

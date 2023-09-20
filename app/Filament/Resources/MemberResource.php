@@ -47,6 +47,8 @@ class MemberResource extends Resource
             ->schema([
                 TextInput::make('name')->required(),
                 TextInput::make('omac_id_number')->label('OMAC ID'),
+                TextInput::make('email')->label('Email Address')->email(),
+                TextInput::make('phone')->label('Phone Number'),
                 Select::make('rank')->options(Rank::class)->required(),
                 Select::make('clinical_level')->options(ClinicalLevel::class)->label('Clinical Level')->required(),
                 TextInput::make('cert_number')->label('Clinical Level Certificate Number'),

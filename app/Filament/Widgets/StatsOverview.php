@@ -17,10 +17,12 @@ class StatsOverview extends BaseWidget
         $duties = Duty::query()->with('members')->whereYear('start', '=', now()->format('Y'))->get();
 
         foreach ($duties as $duty) {
-            if ($duty->members()->count() > 0) {
-                $duration = $duty->end->diffInHours($duty->start);
+            $memberCount = $duty->members()->withTrashed()->count();
 
-                $dutyHours += ($duration * $duty->members()->count());
+            if ($memberCount > 0) {
+                $duration = $duty->end->diffInMinutes($duty->start);
+
+                round($dutyHours += ($duration * $memberCount) / 60);
             }
         }
 

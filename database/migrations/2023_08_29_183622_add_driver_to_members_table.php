@@ -16,14 +16,4 @@ return new class () extends Migration {
             $table->boolean('driver')->default(false);
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('members', function (Blueprint $table): void {
-            $table->dropColumn('driver');
-        });
-    }
 };

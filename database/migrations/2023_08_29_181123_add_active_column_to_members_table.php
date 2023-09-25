@@ -16,14 +16,4 @@ return new class () extends Migration {
             $table->boolean('active')->default(1);
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('members', function (Blueprint $table): void {
-            $table->dropColumn('active');
-        });
-    }
 };

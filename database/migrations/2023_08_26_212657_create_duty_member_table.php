@@ -17,12 +17,4 @@ return new class () extends Migration {
             $table->foreignId('member_id')->constrained()->onDelete('cascade');
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('duty_member');
-    }
 };

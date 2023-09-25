@@ -17,14 +17,4 @@ return new class () extends Migration {
             $table->text('original_file_names')->nullable();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('members', function (Blueprint $table): void {
-            //
-        });
-    }
 };

@@ -19,6 +19,7 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class DutyResource extends Resource
@@ -64,18 +65,20 @@ class DutyResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('organizer')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('start')
-                    ->dateTime()
+                    ->dateTime('M d, Y H:i')
                     ->sortable(),
                 TextColumn::make('end')
-                    ->dateTime()
+                    ->dateTime('M d, Y H:i')
                     ->sortable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('organizer')->options(Duty::query()->get()->pluck('organizer', 'organizer')),
             ])
             ->actions([
                 ViewAction::make(),

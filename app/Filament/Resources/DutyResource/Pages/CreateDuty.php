@@ -10,4 +10,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateDuty extends CreateRecord
 {
     protected static string $resource = DutyResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

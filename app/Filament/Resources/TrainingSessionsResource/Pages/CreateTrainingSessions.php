@@ -10,4 +10,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateTrainingSessions extends CreateRecord
 {
     protected static string $resource = TrainingSessionsResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

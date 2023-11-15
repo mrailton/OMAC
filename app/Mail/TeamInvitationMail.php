@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use App\Models\Invitation;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,12 +11,17 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\URL;
 
-class TeamInvitationMail extends Mailable
+class TeamInvitationMail extends Mailable implements ShouldQueue
 {
     use Queueable;
     use SerializesModels;
 
     private Invitation $invitation;
+
+    public function __construct(Invitation $invitation)
+    {
+        $this->invitation = $invitation;
+    }
 
     public function envelope(): Envelope
     {

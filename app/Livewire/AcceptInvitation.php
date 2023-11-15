@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Models\Invitation;
 use App\Models\User;
 use Filament\Actions\Action;
-use Filament\Actions\ActionGroup;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Form;
@@ -21,17 +20,17 @@ class AcceptInvitation extends SimplePage
 
     protected static string $view = 'livewire.accept-invitation';
 
-    public int $invitation;
-    private Invitation $invitationModel;
+    public string $invitationUuid;
+    private Invitation $invitation;
 
     public ?array $data = [];
 
     public function mount(): void
     {
-        $this->invitationModel = Invitation::findOrFail($this->invitation);
+        $this->invitation = Invitation::findOrFail($this->invitationUuid);
 
         $this->form->fill([
-            'email' => $this->invitationModel->email
+            'email' => $this->invitation->email
         ]);
     }
 
@@ -65,24 +64,21 @@ class AcceptInvitation extends SimplePage
 
     public function create(): void
     {
-        $this->invitationModel = Invitation::find($this->invitation);
+        $this->invitation = Invitation::find($this->invitationUuid);
 
         $user = User::create([
             'name' => $this->form->getState()['name'],
             'password' => $this->form->getState()['password'],
-            'email' => $this->invitationModel->email,
+            'email' => $this->invitation->email,
         ]);
 
         auth()->login($user);
 
-        $this->invitationModel->delete();
+        $this->invitation->delete();
 
         $this->redirect(Dashboard::getUrl());
     }
 
-    /**
-     * @return array<Action | ActionGroup>
-     */
     protected function getFormActions(): array
     {
         return [

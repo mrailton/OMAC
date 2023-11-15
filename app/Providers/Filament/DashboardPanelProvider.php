@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\HealthCheckResults;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -61,7 +62,7 @@ class DashboardPanelProvider extends PanelProvider
             ->plugins([
                 FilamentShieldPlugin::make(),
                 FilamentSpatieLaravelBackupPlugin::make(),
-                FilamentSpatieLaravelHealthPlugin::make(),
+                FilamentSpatieLaravelHealthPlugin::make()->usingPage(HealthCheckResults::class),
             ]);
     }
 }

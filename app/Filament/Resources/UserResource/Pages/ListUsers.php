@@ -10,6 +10,7 @@ use App\Mail\TeamInvitationMail;
 use App\Models\Invitation;
 use App\Models\User;
 use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
@@ -22,15 +23,7 @@ class ListUsers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\Action::make('inviteUser')
-                ->form([
-                    TextInput::make('email')
-                        ->email()
-                        ->required()
-                ])
-                ->action(function ($data) {
-                    (new InviteUser())->execute($data['email']);
-                }),
+            CreateAction::make(),
         ];
     }
 }

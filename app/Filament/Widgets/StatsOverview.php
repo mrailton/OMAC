@@ -6,11 +6,14 @@ namespace App\Filament\Widgets;
 
 use App\Models\Duty;
 use App\Models\Member;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class StatsOverview extends BaseWidget
 {
+    use HasWidgetShield;
+
     protected function getStats(): array
     {
         $dutyHours = 0;

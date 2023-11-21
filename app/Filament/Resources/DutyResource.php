@@ -10,17 +10,22 @@ use App\Filament\Resources\DutyResource\Pages\ListDuties;
 use App\Filament\Resources\DutyResource\Pages\ViewDuty;
 use App\Models\Duty;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class DutyResource extends Resource
 {
@@ -36,11 +41,14 @@ class DutyResource extends Resource
                     ->required()
                     ->maxLength(255),
                 TextInput::make('organizer')
+                    ->datalist(Duty::query()->pluck('organizer')->all())
                     ->required()
                     ->maxLength(255),
                 DateTimePicker::make('start')
                     ->seconds(false)
-                    ->required(),
+                    ->required()
+                    ->live()
+                    ->afterStateUpdated(fn (Set $set, Get $get) => $set('end', $get('start'))),
                 DateTimePicker::make('end')
                     ->seconds(false)
                     ->required(),
@@ -79,6 +87,26 @@ class DutyResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('organizer')->options(Duty::query()->get()->pluck('organizer', 'organizer')),
+                Filter::make('start')
+                    ->form([
+                        Fieldset::make('Duty Start Date / Time')
+                            ->schema([
+                                DateTimePicker::make('from')->default(now()->startOfYear()),
+                                DateTimePicker::make('to')->default(now()->endOfYear()),
+                            ])
+                            ->columns(1)
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when(
+                                $data['from'] ?? null,
+                                fn(Builder $query) => $query->whereDate('start', '>=', $data['from'])
+                            )
+                            ->when(
+                                $data['to'] ?? null,
+                                fn(Builder $query) => $query->whereDate('start', '<=', $data['to'])
+                            );
+                    })
             ])
             ->actions([
                 ViewAction::make(),

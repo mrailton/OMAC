@@ -82,7 +82,7 @@ return [
             'lock_connection' => 'default',
         ],
 
-        'healthcheck' => [
+        'omac_healthcheck' => [
             'driver' => 'redis',
             'connection' => 'cache',
             'lock_connection' => 'default',

@@ -41,7 +41,7 @@ class DutyResource extends Resource
                     ->required()
                     ->maxLength(255),
                 TextInput::make('organizer')
-                    ->datalist(Duty::query()->pluck('organizer')->all())
+                    ->datalist(Duty::query()->groupBy('organizer')->pluck('organizer')->all())
                     ->required()
                     ->maxLength(255),
                 DateTimePicker::make('start')

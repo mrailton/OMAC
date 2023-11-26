@@ -35,6 +35,9 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Columns\Column;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class MemberResource extends Resource
 {
@@ -106,6 +109,27 @@ class MemberResource extends Resource
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
+                ExportBulkAction::make()->exports([
+                    ExcelExport::make()->withColumns([
+                        Column::make('name'),
+                        Column::make('active'),
+                        Column::make('driver'),
+                        Column::make('omac_id_number'),
+                        Column::make('email'),
+                        Column::make('phone'),
+                        Column::make('rank'),
+                        Column::make('clinical_level'),
+                        Column::make('cert_number'),
+                        Column::make('cert_expires_on'),
+                        Column::make('cfr_level'),
+                        Column::make('cfr_cert_number'),
+                        Column::make('cfr_expires_on'),
+                        Column::make('garda_vetting_id'),
+                        Column::make('garda_vetting_date'),
+                        Column::make('cpap_date')
+                    ])
+                        ->withFilename('Rathdrum OMAC Members'),
+                ])
             ]);
     }
 

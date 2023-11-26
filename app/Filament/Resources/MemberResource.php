@@ -114,6 +114,20 @@ class MemberResource extends Resource
                         Column::make('name'),
                         Column::make('active'),
                         Column::make('driver'),
+                        Column::make('trainings_attended')
+                            ->getStateUsing(fn($record) => $record->trainingSessions->count()),
+                        Column::make('duties_attended')
+                            ->getStateUsing(fn($record) => $record->duties->count()),
+                        Column::make('duty_hours')
+                            ->getStateUsing(function ($record) {
+                                $totalMins = 0;
+
+                                foreach ($record->duties as $duty) {
+                                    $totalMins += $duty->end->diffInMinutes($duty->start);
+                                }
+
+                                return round($totalMins / 60);
+                            }),
                         Column::make('omac_id_number'),
                         Column::make('email'),
                         Column::make('phone'),

@@ -26,6 +26,9 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Columns\Column;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class DutyResource extends Resource
 {
@@ -48,7 +51,7 @@ class DutyResource extends Resource
                     ->seconds(false)
                     ->required()
                     ->live()
-                    ->afterStateUpdated(fn (Set $set, Get $get) => $set('end', $get('start'))),
+                    ->afterStateUpdated(fn(Set $set, Get $get) => $set('end', $get('start'))),
                 DateTimePicker::make('end')
                     ->seconds(false)
                     ->required(),
@@ -115,6 +118,25 @@ class DutyResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
+                ExportBulkAction::make()->exports([
+                    ExcelExport::make()->withColumns([
+                        Column::make('name'),
+                        Column::make('organizer'),
+                        Column::make('start')->format('Y-m-d H:i'),
+                        Column::make('end')->format('Y-m-d H:i'),
+                        Column::make('duration')
+                            ->getStateUsing(fn($record) => round($record->end->diffInMinutes($record->start) / 60)),
+                        Column::make('duty_hours')
+                            ->getStateUsing(fn($record) => round(($record->end->diffInMinutes($record->start) * $record->members->count()) / 60)),
+                        Column::make('members')
+                            ->heading('Members')
+                            ->getStateUsing(fn($record) => $record->members->pluck('name')->join(', ')),
+                        Column::make('vehicles')
+                            ->heading('Vehicles')
+                            ->getStateUsing(fn($record) => $record->vehicles->pluck('call_sign')->join(', ')),
+                    ])
+                        ->withFilename('Rathdrum OMAC Duties'),
+                ])
             ])
             ->defaultSort('start');
     }

@@ -15,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        'RickDBCN\FilamentEmail\Models\Email' => 'App\Policies\EmailPolicy',
     ];
 
     /**

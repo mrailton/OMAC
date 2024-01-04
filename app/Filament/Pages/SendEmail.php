@@ -28,7 +28,7 @@ class SendEmail extends Page implements HasForms
 
     protected static string $view = 'filament.pages.send-email';
 
-    protected static ?string $navigationGroup = 'System';
+    protected static ?string $navigationGroup = 'Email';
 
     public function form(Form $form): Form
     {

@@ -22,12 +22,6 @@ task('deploy', [
     'artisan:migrate',
     'deploy:publish',
     'artisan:queue:restart',
-    'honeybadger:deploy',
 ]);
-
-task('honeybadger:deploy', function () {
-    cd('{{release_path}}');
-    run('php artisan honeybadger:deploy');
-});
 
 after('deploy:failed', 'deploy:unlock');

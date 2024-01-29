@@ -5,7 +5,7 @@ use Croustibat\FilamentJobsMonitor\Resources\QueueMonitorResource;
 return [
     'resources' => [
         'enabled' => true,
-        'label' => 'Job',
+        'label' => 'Queue Monitor',
         'plural_label' => 'Queue Monitor',
         'navigation_group' => 'System',
         'navigation_icon' => 'heroicon-o-cpu-chip',

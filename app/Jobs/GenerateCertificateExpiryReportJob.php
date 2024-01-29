@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Mail\CertificateExpiryMail;
 use App\Models\Member;
-use App\Models\User;
 use App\Models\UserReport;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -44,6 +45,10 @@ class GenerateCertificateExpiryReportJob implements ShouldQueue
             ->orWhere('cert_expires_on', '<', $date)
             ->orWhere('garda_vetting_date', '<', $date->clone()->subYears(3))
             ->orWhere('manual_handling_date', '<', $date->clone()->subYears(2))
+            ->orWhereNull('cfr_expires_on')
+            ->orWhereNull('cert_expires_on')
+            ->orWhereNull('garda_vetting_date')
+            ->orWhereNull('manual_handling_date')
             ->get();
     }
 
@@ -52,7 +57,7 @@ class GenerateCertificateExpiryReportJob implements ShouldQueue
         $recipients = new Collection();
         $reports = UserReport::query()->with('user')->where('report', '=', 'certificate_expiry_report')->get();
 
-        $reports->map(function (UserReport $report) use ($recipients) {
+        $reports->map(function (UserReport $report) use ($recipients): void {
             $recipients->add($report->user);
         });
 

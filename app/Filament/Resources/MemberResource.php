@@ -59,6 +59,7 @@ class MemberResource extends Resource
                 Select::make('cfr_level')->options(CFRLevel::class)->label('CFR Level')->required(),
                 TextInput::make('cfr_cert_number')->label('CFR Certificate Number'),
                 DatePicker::make('cfr_expires_on')->label('CFR Certificate Expiry')->native(false),
+                DatePicker::make('manual_handling_date')->label('Manual Handling')->native(false),
                 TextInput::make('garda_vetting_id')->label('Garda Vetting Number'),
                 DatePicker::make('garda_vetting_date')->label('Garda Vetting Date')->native(false),
                 DatePicker::make('cpap_date')->label('CPAP Date')->native(false),

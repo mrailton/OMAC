@@ -14,12 +14,11 @@ use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Validation\Rules\Unique;
 use Livewire\Component as Livewire;
 
 class ReportsRelationManager extends RelationManager
 {
-    public static array $options = ['certificate_expiry_report' => 'Certificate Expiry Report', 'monthly_duty_report' => 'Monthly Duty Report'];
+    public static array $options = ['certificate_expiry_report' => 'Certificate Expiry Report'];
 
     protected static string $relationship = 'reports';
 

@@ -15,12 +15,12 @@ use App\Filament\Resources\MemberResource\RelationManagers\DutiesRelationManager
 use App\Filament\Resources\MemberResource\RelationManagers\NotesRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\TrainingSessionsRelationManager;
 use App\Models\Member;
-use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
@@ -49,6 +49,7 @@ class MemberResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->required(),
+                Select::make('active')->options([false => 'No', true => 'Yes']),
                 TextInput::make('omac_id_number')->label('OMAC ID'),
                 TextInput::make('email')->label('Email Address')->email(),
                 TextInput::make('phone')->label('Phone Number'),
@@ -59,12 +60,13 @@ class MemberResource extends Resource
                 Select::make('cfr_level')->options(CFRLevel::class)->label('CFR Level')->required(),
                 TextInput::make('cfr_cert_number')->label('CFR Certificate Number'),
                 DatePicker::make('cfr_expires_on')->label('CFR Certificate Expiry')->native(false),
-                DatePicker::make('manual_handling_date')->label('Manual Handling')->native(false),
+                DatePicker::make('manual_handling_date')->label('Manual Handling Date')->native(false),
                 TextInput::make('garda_vetting_id')->label('Garda Vetting Number'),
                 DatePicker::make('garda_vetting_date')->label('Garda Vetting Date')->native(false),
                 DatePicker::make('cpap_date')->label('CPAP Date')->native(false),
-                Checkbox::make('active'),
-                Checkbox::make('driver'),
+                Select::make('driver')->options([false => 'No', true => 'Yes'])->live(),
+                TextInput::make('driving_license_number')->label('Driving License Number')->visible(fn (Get $get): bool => null !== $get('driver') && $get('driver')),
+                Select::make('driving_license_classes')->label('Driving License Classes')->options(['B', 'C1', 'C', 'D1', 'D', 'BE', 'C1E', 'CE', 'D1E', 'D'])->multiple()->visible(fn (Get $get): bool => null !== $get('driver') && $get('driver')),
                 FileUpload::make('files')
                     ->multiple()
                     ->disk('s3')

@@ -21,7 +21,7 @@ class Member extends Model implements AuditableContract
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['name', 'omac_id_number', 'rank', 'clinical_level', 'cfr_level', 'cfr_expires_on', 'cfr_cert_number', 'cert_expires_on', 'cert_number', 'garda_vetting_date', 'garda_vetting_id', 'cpap_date', 'files', 'original_file_names', 'active', 'driver', 'email', 'phone', 'manual_handling_date'];
+    protected $fillable = ['name', 'omac_id_number', 'rank', 'clinical_level', 'cfr_level', 'cfr_expires_on', 'cfr_cert_number', 'cert_expires_on', 'cert_number', 'garda_vetting_date', 'garda_vetting_id', 'cpap_date', 'files', 'original_file_names', 'active', 'driver', 'email', 'phone', 'manual_handling_date', 'driving_license_number', 'driving_license_classes'];
 
     protected $casts = [
         'cert_expires_on' => 'date',
@@ -36,6 +36,7 @@ class Member extends Model implements AuditableContract
         'active' => 'boolean',
         'driver' => 'boolean',
         'manual_handling_date' => 'date',
+        'driving_license_classes' => 'array',
     ];
 
     public function notes(): HasMany

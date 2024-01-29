@@ -1,15 +1,17 @@
 <?php
 
+use Croustibat\FilamentJobsMonitor\Resources\QueueMonitorResource;
+
 return [
     'resources' => [
         'enabled' => true,
-        'label' => 'Job',
-        'plural_label' => 'Jobs',
+        'label' => 'Queue Monitor',
+        'plural_label' => 'Queue Monitor',
         'navigation_group' => 'System',
         'navigation_icon' => 'heroicon-o-cpu-chip',
         'navigation_sort' => null,
         'navigation_count_badge' => false,
-        'resource' => Croustibat\FilamentJobsMonitor\Resources\QueueMonitorResource::class,
+        'resource' => QueueMonitorResource::class,
     ],
     'pruning' => [
         'enabled' => true,

@@ -19,6 +19,7 @@ task('deploy', [
     'artisan:storage:link',
     'artisan:view:cache',
     'artisan:config:cache',
+    'artisan:route:cache',
     'artisan:migrate',
     'deploy:publish',
     'artisan:queue:restart',

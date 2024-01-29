@@ -8,6 +8,7 @@ use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Resources\UserResource\Pages\EditUser;
 use App\Filament\Resources\UserResource\Pages\ListUsers;
 use App\Filament\Resources\UserResource\Pages\ViewUser;
+use App\Filament\Resources\UserResource\RelationManagers\ReportsRelationManager;
 use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -82,6 +83,13 @@ class UserResource extends Resource
             'create' => CreateUser::route('/create'),
             'view' => ViewUser::route('/{record}'),
             'edit' => EditUser::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            ReportsRelationManager::make(),
         ];
     }
 }

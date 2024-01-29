@@ -6,6 +6,7 @@
     "require": {
         "php": "^8.2",
         "bezhansalleh/filament-shield": "^3.0",
+        "croustibat/filament-jobs-monitor": "^2.1",
         "doctrine/dbal": "^3.6",
         "filament/filament": "^3.0-stable",
         "filipfonal/filament-log-manager": "^2.0",

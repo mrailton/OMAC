@@ -7,6 +7,7 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\Backups;
 use App\Filament\Pages\HealthCheckResults;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -66,6 +67,7 @@ class DashboardPanelProvider extends PanelProvider
                 FilamentSpatieLaravelBackupPlugin::make()->usingPage(Backups::class),
                 FilamentSpatieLaravelHealthPlugin::make()->usingPage(HealthCheckResults::class),
                 FilamentLogManager::make(),
+                FilamentJobsMonitorPlugin::make(),
             ]);
     }
 }

@@ -84,11 +84,11 @@ class MemberResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->sortable()->searchable(),
+                IconColumn::make('active')->boolean(),
                 TextColumn::make('omac_id_number')->sortable()->searchable()->label('OMAC ID'),
                 TextColumn::make('rank')->sortable()->searchable(),
                 TextColumn::make('clinical_level')->sortable()->searchable()->label('Clinical Level'),
                 TextColumn::make('cfr_level')->sortable()->searchable()->label('CFR Level'),
-                IconColumn::make('active')->boolean(),
                 IconColumn::make('driver')->boolean(),
             ])
             ->defaultSort('name')

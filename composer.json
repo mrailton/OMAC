@@ -13,7 +13,6 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
-        "laravel/slack-notification-channel": "^3.0",
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "^3.0",
         "owen-it/laravel-auditing": "^13.5",
@@ -27,7 +26,6 @@
         "torann/geoip": "^3.0"
     },
     "require-dev": {
-        "deployer/deployer": "^7.3",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "mockery/mockery": "^1.4.4",

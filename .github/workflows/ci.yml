@@ -44,22 +44,8 @@ jobs:
     runs-on: ubuntu-22.04
     needs: test
     if: github.ref == 'refs/heads/main'
-    env:
-      HOST: ${{secrets.HOST}}
-      USER: ${{secrets.USERNAME}}
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-
-      - name: Install dependencies
-        run: composer install
-
       - name: Deploy
-        uses: deployphp/action@v1
+        uses: Glennmen/ploi-deploy-action@v1.2.0
         with:
-          private-key: ${{ secrets.PRIVATE_KEY }}
-          dep: deploy
+          webhook_url: ${{ secrets.WEBHOOK_URL }}

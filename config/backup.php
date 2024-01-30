@@ -168,7 +168,7 @@ return [
         'notifiable' => Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => 'marksrailton@gmail.com',
+            'to' => env('HEALTH_CHECK_NOTIFICATIONS_EMAIL'),
 
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),

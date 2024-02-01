@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Console;
 
-use App\Console\Commands\CertificateExpiryReport;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Spatie\Health\Commands\RunHealthChecksCommand;
@@ -21,7 +20,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:run')->dailyAt('03:30');
         $schedule->command(RunHealthChecksCommand::class)->everyMinute();
         $schedule->command(ScheduleCheckHeartbeatCommand::class)->everyMinute();
-        $schedule->command(CertificateExpiryReport::class)->monthlyOn(1, '09:00');
+        $schedule->command('report:certificate-expiry')->monthlyOn(1, '12:00');
     }
 
     /**

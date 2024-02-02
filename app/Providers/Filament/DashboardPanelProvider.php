@@ -66,7 +66,6 @@ class DashboardPanelProvider extends PanelProvider
                 FilamentShieldPlugin::make(),
                 FilamentSpatieLaravelBackupPlugin::make()->usingPage(Backups::class),
                 FilamentSpatieLaravelHealthPlugin::make()->usingPage(HealthCheckResults::class),
-                FilamentLogManager::make(),
                 FilamentJobsMonitorPlugin::make(),
             ]);
     }

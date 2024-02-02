@@ -51,7 +51,7 @@ class DutyResource extends Resource
                     ->seconds(false)
                     ->required()
                     ->live()
-                    ->afterStateUpdated(fn(Set $set, Get $get) => $set('end', $get('start'))),
+                    ->afterStateUpdated(fn (Set $set, Get $get) => $set('end', $get('start'))),
                 DateTimePicker::make('end')
                     ->seconds(false)
                     ->required(),
@@ -103,11 +103,11 @@ class DutyResource extends Resource
                         return $query
                             ->when(
                                 $data['from'] ?? null,
-                                fn(Builder $query) => $query->whereDate('start', '>=', $data['from'])
+                                fn (Builder $query) => $query->whereDate('start', '>=', $data['from'])
                             )
                             ->when(
                                 $data['to'] ?? null,
-                                fn(Builder $query) => $query->whereDate('start', '<=', $data['to'])
+                                fn (Builder $query) => $query->whereDate('start', '<=', $data['to'])
                             );
                     })
             ])
@@ -125,20 +125,20 @@ class DutyResource extends Resource
                         Column::make('start')->format('Y-m-d H:i'),
                         Column::make('end')->format('Y-m-d H:i'),
                         Column::make('duration')
-                            ->getStateUsing(fn($record) => round($record->end->diffInMinutes($record->start) / 60)),
+                            ->getStateUsing(fn ($record) => round($record->end->diffInMinutes($record->start) / 60)),
                         Column::make('duty_hours')
-                            ->getStateUsing(fn($record) => round(($record->end->diffInMinutes($record->start) * $record->members->count()) / 60)),
+                            ->getStateUsing(fn ($record) => round(($record->end->diffInMinutes($record->start) * $record->members->count()) / 60)),
                         Column::make('members')
                             ->heading('Members')
-                            ->getStateUsing(fn($record) => $record->members->pluck('name')->join(', ')),
+                            ->getStateUsing(fn ($record) => $record->members->pluck('name')->join(', ')),
                         Column::make('vehicles')
                             ->heading('Vehicles')
-                            ->getStateUsing(fn($record) => $record->vehicles->pluck('call_sign')->join(', ')),
+                            ->getStateUsing(fn ($record) => $record->vehicles->pluck('call_sign')->join(', ')),
                     ])
                         ->withFilename('Rathdrum OMAC Duties'),
                 ])
             ])
-            ->defaultSort('start');
+            ->defaultSort('start', 'desc');
     }
 
     public static function getPages(): array

@@ -7,6 +7,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\TrainingSessionsResource\Pages;
 use App\Models\TrainingSession;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -16,7 +17,9 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class TrainingSessionsResource extends Resource
 {
@@ -28,8 +31,8 @@ class TrainingSessionsResource extends Resource
     {
         return $form
             ->schema([
-                DatePicker::make('date')->native(false)->default(now()),
-                TextInput::make('topic'),
+                DatePicker::make('date')->native(false)->default(now())->required(),
+                TextInput::make('topic')->required(),
                 Textarea::make('notes'),
                 Select::make('members')
                     ->relationship('members', 'name')
@@ -48,7 +51,26 @@ class TrainingSessionsResource extends Resource
                 TextColumn::make('topic'),
             ])
             ->filters([
-                //
+                Filter::make('date')
+                    ->form([
+                        Fieldset::make('Training Date')
+                            ->schema([
+                                DatePicker::make('from')->default(now()->startOfYear()),
+                                DatePicker::make('to')->default(now()->endOfYear()),
+                            ])
+                            ->columns(1)
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when(
+                                $data['from'] ?? null,
+                                fn (Builder $query) => $query->whereDate('date', '>=', $data['from'])
+                            )
+                            ->when(
+                                $data['to'] ?? null,
+                                fn (Builder $query) => $query->whereDate('date', '<=', $data['to'])
+                            );
+                    })
             ])
             ->actions([
                 ViewAction::make(),
@@ -57,7 +79,8 @@ class TrainingSessionsResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('date', 'desc');
     }
 
     public static function getPages(): array

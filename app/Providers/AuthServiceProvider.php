@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Policies\QueueMonitorPolicy;
+use Croustibat\FilamentJobsMonitor\Models\QueueMonitor;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -15,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        'Croustibat\FilamentJobsMonitor\Models\QueueMonitor' => 'App\Policies\QueueMonitorPolicy',
+        QueueMonitor::class => QueueMonitorPolicy::class,
     ];
 
     /**

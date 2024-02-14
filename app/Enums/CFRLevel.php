@@ -11,6 +11,8 @@ enum CFRLevel: string implements HasLabel
     case NA = 'N/A';
     case CFRC = 'CFR Community';
     case CFRA = 'CFR Advanced';
+    case CFRCI = 'CFR Community Instructor';
+    case CFRAI = 'CFR Advanced Instructor';
 
     public function getLabel(): ?string
     {

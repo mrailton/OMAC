@@ -49,11 +49,11 @@ class MemberResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->required(),
-                Select::make('active')->options([false => 'No', true => 'Yes']),
+                Select::make('active')->options([false => 'No', true => 'Yes'])->required()->default(false),
                 TextInput::make('omac_id_number')->label('OMAC ID'),
                 TextInput::make('email')->label('Email Address')->email(),
                 TextInput::make('phone')->label('Phone Number'),
-                Select::make('rank')->options(Rank::class)->required(),
+                Select::make('rank')->options(Rank::class)->required()->default(Rank::VOLUNTEER),
                 Select::make('clinical_level')->options(ClinicalLevel::class)->label('Clinical Level')->required(),
                 TextInput::make('cert_number')->label('Clinical Level Certificate Number'),
                 DatePicker::make('cert_expires_on')->label('Clinical Level Certificate Expiry')->native(false),
@@ -64,7 +64,7 @@ class MemberResource extends Resource
                 TextInput::make('garda_vetting_id')->label('Garda Vetting Number'),
                 DatePicker::make('garda_vetting_date')->label('Garda Vetting Date')->native(false),
                 DatePicker::make('cpap_date')->label('CPAP Date')->native(false),
-                Select::make('driver')->options([false => 'No', true => 'Yes'])->live(),
+                Select::make('driver')->options([false => 'No', true => 'Yes'])->live()->required(),
                 TextInput::make('driving_license_number')->label('Driving License Number')->visible(fn (Get $get): bool => null !== $get('driver') && $get('driver')),
                 Select::make('driving_license_classes')->label('Driving License Classes')->options(['B', 'C1', 'C', 'D1', 'D', 'BE', 'C1E', 'CE', 'D1E', 'D'])->multiple()->visible(fn (Get $get): bool => null !== $get('driver') && $get('driver')),
                 FileUpload::make('files')

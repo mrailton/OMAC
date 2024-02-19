@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\MemberResource\RelationManagers;
 
-use App\Filament\Resources\DutyResource;
-use App\Models\Duty;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -33,8 +30,17 @@ class DutiesRelationManager extends RelationManager
             ->filters([
                 //
             ])
+            ->headerActions([
+                //
+            ])
             ->actions([
-                Action::make('view')->url(fn (Duty $record): string => DutyResource::getUrl('view', ['record' => $record]))
+                //
+            ])
+            ->bulkActions([
+                //
+            ])
+            ->emptyStateActions([
+                //
             ]);
     }
 }

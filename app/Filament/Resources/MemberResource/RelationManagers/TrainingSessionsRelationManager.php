@@ -26,20 +26,6 @@ class TrainingSessionsRelationManager extends RelationManager
                 TextColumn::make('date')->date('d/m/Y'),
                 TextColumn::make('topic'),
             ])
-            ->filters([
-                //
-            ])
-            ->headerActions([
-                //
-            ])
-            ->actions([
-                //
-            ])
-            ->bulkActions([
-                //
-            ])
-            ->emptyStateActions([
-                //
-            ]);
+            ->defaultSort('date', 'desc');
     }
 }

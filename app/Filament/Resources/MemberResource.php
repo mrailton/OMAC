@@ -117,7 +117,7 @@ class MemberResource extends Resource
                     ->downloadable()
                     ->previewable(false)
                     ->reorderable()
-                    ->panelLayout('grid')
+                    ->panelLayout('list')
                     ->appendFiles(),
             ]);
     }

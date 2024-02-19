@@ -27,20 +27,6 @@ class DutiesRelationManager extends RelationManager
                 TextColumn::make('start')->date('d/m/Y H:i'),
                 TextColumn::make('end')->date('d/m/Y H:i'),
             ])
-            ->filters([
-                //
-            ])
-            ->headerActions([
-                //
-            ])
-            ->actions([
-                //
-            ])
-            ->bulkActions([
-                //
-            ])
-            ->emptyStateActions([
-                //
-            ]);
+            ->defaultSort('start', 'desc');
     }
 }

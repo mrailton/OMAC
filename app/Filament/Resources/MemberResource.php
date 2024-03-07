@@ -137,11 +137,20 @@ class MemberResource extends Resource
             ->defaultSort('name')
             ->filters([
                 TrashedFilter::make(),
-                SelectFilter::make('rank')->options(Rank::class)->multiple(),
-                SelectFilter::make('cfr_level')->options(CFRLevel::class)->label('CFR Level'),
-                SelectFilter::make('clinical_level')->options(ClinicalLevel::class)->label('Clinical Level')->multiple(),
-                SelectFilter::make('active')->options([0 => 'No', 1 => 'Yes']),
-                SelectFilter::make('driver')->options([0 => 'No', 1 => 'Yes']),
+                SelectFilter::make('rank')
+                    ->options(Rank::class)
+                    ->multiple(),
+                SelectFilter::make('cfr_level')
+                    ->options(CFRLevel::class)
+                    ->label('CFR Level'),
+                SelectFilter::make('clinical_level')
+                    ->options(ClinicalLevel::class)
+                    ->label('Clinical Level')
+                    ->multiple(),
+                SelectFilter::make('active')
+                    ->options([0 => 'No', 1 => 'Yes']),
+                SelectFilter::make('driver')
+                    ->options([0 => 'No', 1 => 'Yes']),
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->filtersFormColumns(6)
             ->actions([

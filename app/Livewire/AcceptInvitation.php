@@ -79,7 +79,7 @@ class AcceptInvitation extends SimplePage
         $this->redirect(Dashboard::getUrl());
     }
 
-    protected function getFormActions(): array
+    public function getFormActions(): array
     {
         return [
             $this->getRegisterFormAction(),

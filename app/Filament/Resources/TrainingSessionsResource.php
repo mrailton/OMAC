@@ -39,7 +39,7 @@ class TrainingSessionsResource extends Resource
                     ->preload()
                     ->multiple()
                     ->required()
-                    ->label('Attendees')
+                    ->label('Attendees'),
             ]);
     }
 
@@ -58,7 +58,7 @@ class TrainingSessionsResource extends Resource
                                 DatePicker::make('from')->default(now()->startOfYear()),
                                 DatePicker::make('to')->default(now()->endOfYear()),
                             ])
-                            ->columns(1)
+                            ->columns(1),
                     ])
                     ->query(function (Builder $query, array $data) {
                         return $query
@@ -70,7 +70,7 @@ class TrainingSessionsResource extends Resource
                                 $data['to'] ?? null,
                                 fn (Builder $query) => $query->whereDate('date', '<=', $data['to'])
                             );
-                    })
+                    }),
             ])
             ->actions([
                 ViewAction::make(),

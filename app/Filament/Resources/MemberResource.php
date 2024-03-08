@@ -16,6 +16,7 @@ use App\Filament\Resources\MemberResource\RelationManagers\NotesRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\TrainingSessionsRelationManager;
 use App\Models\Member;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -30,6 +31,7 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -56,6 +58,9 @@ class MemberResource extends Resource
                     ->required(),
                 TextInput::make('omac_id_number')
                     ->label('OMAC ID'),
+                DatePicker::make('join_date')
+                    ->native(false)
+                    ->label('Join Date'),
                 TextInput::make('email')
                     ->label('Email Address')
                     ->email(),
@@ -151,8 +156,27 @@ class MemberResource extends Resource
                     ->options([0 => 'No', 1 => 'Yes']),
                 SelectFilter::make('driver')
                     ->options([0 => 'No', 1 => 'Yes']),
-            ], layout: FiltersLayout::AboveContentCollapsible)
-            ->filtersFormColumns(6)
+                Filter::make('join_date')
+                    ->form([
+                        Fieldset::make('Join Date')
+                            ->schema([
+                                DatePicker::make('from'),
+                                DatePicker::make('to'),
+                            ])
+                            ->columns(1),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when(
+                                $data['from'] ?? null,
+                                fn (Builder $query) => $query->whereDate('join_date', '>=', $data['from'])
+                            )
+                            ->when(
+                                $data['to'] ?? null,
+                                fn (Builder $query) => $query->whereDate('join_date', '<=', $data['to'])
+                            );
+                    }),
+            ])
             ->actions([
                 ViewAction::make(),
             ])

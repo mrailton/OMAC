@@ -17,9 +17,12 @@ class TrainingSession extends Model implements AuditableContract
 
     protected $fillable = ['date', 'topic', 'notes'];
 
-    protected $casts = [
-        'date' => 'date',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'date' => 'date',
+        ];
+    }
 
     public function members(): BelongsToMany
     {

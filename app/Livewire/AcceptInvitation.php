@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use App\Models\Invitation;
@@ -15,15 +17,15 @@ use Illuminate\Validation\Rules\Password;
 
 class AcceptInvitation extends SimplePage
 {
-    use InteractsWithForms;
     use InteractsWithFormActions;
-
-    protected static string $view = 'livewire.accept-invitation';
+    use InteractsWithForms;
 
     public string $invitationUuid;
-    private Invitation $invitation;
 
     public ?array $data = [];
+
+    protected static string $view = 'livewire.accept-invitation';
+    private Invitation $invitation;
 
     public function mount(): void
     {

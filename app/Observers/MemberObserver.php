@@ -27,7 +27,7 @@ class MemberObserver
             $newFieldContents = $member->files;
 
             foreach ($originalFieldContents as $file) {
-                if (!in_array($file, $newFieldContents)) {
+                if ( ! in_array($file, $newFieldContents)) {
                     Storage::disk('s3')->delete($file);
                 }
             }

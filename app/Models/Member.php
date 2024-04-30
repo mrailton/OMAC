@@ -23,6 +23,21 @@ class Member extends Model implements AuditableContract
 
     protected $fillable = ['name', 'omac_id_number', 'rank', 'clinical_level', 'cfr_level', 'cfr_expires_on', 'cfr_cert_number', 'cert_expires_on', 'cert_number', 'garda_vetting_date', 'garda_vetting_id', 'cpap_date', 'files', 'original_file_names', 'active', 'driver', 'email', 'phone', 'manual_handling_date', 'driving_license_number', 'driving_license_classes', 'join_date'];
 
+    public function notes(): HasMany
+    {
+        return $this->hasMany(MemberNote::class);
+    }
+
+    public function trainingSessions(): BelongsToMany
+    {
+        return $this->belongsToMany(TrainingSession::class);
+    }
+
+    public function duties(): BelongsToMany
+    {
+        return $this->belongsToMany(Duty::class);
+    }
+
     protected function casts(): array
     {
         return [
@@ -41,20 +56,5 @@ class Member extends Model implements AuditableContract
             'driving_license_classes' => 'array',
             'join_date' => 'date',
         ];
-    }
-
-    public function notes(): HasMany
-    {
-        return $this->hasMany(MemberNote::class);
-    }
-
-    public function trainingSessions(): BelongsToMany
-    {
-        return $this->belongsToMany(TrainingSession::class);
-    }
-
-    public function duties(): BelongsToMany
-    {
-        return $this->belongsToMany(Duty::class);
     }
 }

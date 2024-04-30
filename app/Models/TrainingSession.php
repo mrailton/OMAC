@@ -17,15 +17,15 @@ class TrainingSession extends Model implements AuditableContract
 
     protected $fillable = ['date', 'topic', 'notes'];
 
+    public function members(): BelongsToMany
+    {
+        return $this->belongsToMany(Member::class);
+    }
+
     protected function casts(): array
     {
         return [
             'date' => 'date',
         ];
-    }
-
-    public function members(): BelongsToMany
-    {
-        return $this->belongsToMany(Member::class);
     }
 }

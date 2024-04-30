@@ -17,14 +17,6 @@ class Duty extends Model implements AuditableContract
 
     protected $fillable = ['name', 'organizer', 'start', 'end', 'notes'];
 
-    protected function casts(): array
-    {
-        return [
-            'start' => 'datetime',
-            'end' => 'datetime',
-        ];
-    }
-
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(Member::class);
@@ -33,5 +25,13 @@ class Duty extends Model implements AuditableContract
     public function vehicles(): BelongsToMany
     {
         return $this->belongsToMany(Vehicle::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'start' => 'datetime',
+            'end' => 'datetime',
+        ];
     }
 }

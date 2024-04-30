@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Croustibat\FilamentJobsMonitor\Resources\QueueMonitorResource;
 
 return [

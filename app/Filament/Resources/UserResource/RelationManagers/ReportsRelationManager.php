@@ -43,7 +43,7 @@ class ReportsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('report')
             ->columns([
-                TextColumn::make('report')->formatStateUsing(fn(string $state): string => ucwords(str_replace('_', ' ', $state))),
+                TextColumn::make('report')->formatStateUsing(fn (string $state): string => ucwords(str_replace('_', ' ', $state))),
             ])
             ->headerActions([
                 CreateAction::make(),

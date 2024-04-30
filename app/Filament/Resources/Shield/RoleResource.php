@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Shield;
 
+use App\Filament\Resources\Shield\RoleResource\Pages;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use BezhanSalleh\FilamentShield\Facades\FilamentShield;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
-use App\Filament\Resources\Shield\RoleResource\Pages;
 use BezhanSalleh\FilamentShield\Support\Utils;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
@@ -283,23 +285,6 @@ class RoleResource extends Resource implements HasShieldPermissions
             ->toArray();
     }
 
-    protected static function getCustomEntities(): ?Collection
-    {
-        $resourcePermissions = collect();
-        collect(FilamentShield::getResources())->each(function ($entity) use ($resourcePermissions) {
-            collect(Utils::getResourcePermissionPrefixes($entity['fqcn']))->map(function ($permission) use ($resourcePermissions, $entity) {
-                $resourcePermissions->push((string) Str::of($permission . '_' . $entity['resource']));
-            });
-        });
-
-        $entitiesPermissions = $resourcePermissions
-            ->merge(collect(FilamentShield::getPages())->map(fn ($page) => $page['permission'])->values())
-            ->merge(collect(FilamentShield::getWidgets())->map(fn ($widget) => $widget['permission'])->values())
-            ->values();
-
-        return static::$permissionsCollection->whereNotIn('name', $entitiesPermissions)->pluck('name');
-    }
-
     public static function getCheckBoxListComponentForResource(array $entity): Component
     {
         $permissionsArray = static::getResourcePermissionOptions($entity);
@@ -365,5 +350,22 @@ class RoleResource extends Resource implements HasShieldPermissions
             ->gridDirection('row')
             ->columns(FilamentShieldPlugin::get()->getCheckboxListColumns())
             ->columnSpan(FilamentShieldPlugin::get()->getCheckboxListColumnSpan());
+    }
+
+    protected static function getCustomEntities(): ?Collection
+    {
+        $resourcePermissions = collect();
+        collect(FilamentShield::getResources())->each(function ($entity) use ($resourcePermissions): void {
+            collect(Utils::getResourcePermissionPrefixes($entity['fqcn']))->map(function ($permission) use ($resourcePermissions, $entity): void {
+                $resourcePermissions->push((string) Str::of($permission . '_' . $entity['resource']));
+            });
+        });
+
+        $entitiesPermissions = $resourcePermissions
+            ->merge(collect(FilamentShield::getPages())->map(fn ($page) => $page['permission'])->values())
+            ->merge(collect(FilamentShield::getWidgets())->map(fn ($widget) => $widget['permission'])->values())
+            ->values();
+
+        return static::$permissionsCollection->whereNotIn('name', $entitiesPermissions)->pluck('name');
     }
 }

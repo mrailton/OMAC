@@ -44,16 +44,6 @@ class User extends Authenticatable implements FilamentUser, AuditableContract
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
-
     public function canAccessPanel(Panel $panel): bool
     {
         return true;
@@ -62,5 +52,18 @@ class User extends Authenticatable implements FilamentUser, AuditableContract
     public function reports(): HasMany
     {
         return $this->hasMany(UserReport::class);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 }

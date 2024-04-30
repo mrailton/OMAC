@@ -12,10 +12,10 @@ return [
 
     // The events the package listens for to log
     'events' => [
-        'login' => \Illuminate\Auth\Events\Login::class,
-        'failed' => \Illuminate\Auth\Events\Failed::class,
-        'logout' => \Illuminate\Auth\Events\Logout::class,
-        'logout-other-devices' => \Illuminate\Auth\Events\OtherDeviceLogout::class,
+        'login' => Illuminate\Auth\Events\Login::class,
+        'failed' => Illuminate\Auth\Events\Failed::class,
+        'logout' => Illuminate\Auth\Events\Logout::class,
+        'logout-other-devices' => Illuminate\Auth\Events\OtherDeviceLogout::class,
     ],
 
     'notifications' => [
@@ -27,7 +27,7 @@ return [
             'location' => true,
 
             // The Notification class to send
-            'template' => \Rappasoft\LaravelAuthenticationLog\Notifications\NewDevice::class,
+            'template' => Rappasoft\LaravelAuthenticationLog\Notifications\NewDevice::class,
         ],
         'failed-login' => [
             // Send the FailedLogin notification
@@ -37,7 +37,7 @@ return [
             'location' => true,
 
             // The Notification class to send
-            'template' => \Rappasoft\LaravelAuthenticationLog\Notifications\FailedLogin::class,
+            'template' => Rappasoft\LaravelAuthenticationLog\Notifications\FailedLogin::class,
         ],
     ],
 

@@ -15,7 +15,7 @@ class Duty extends Model implements AuditableContract
     use Auditable;
     use HasFactory;
 
-    protected $fillable = ['name', 'organizer', 'start', 'end', 'notes'];
+    protected $fillable = ['name', 'organizer', 'start', 'end', 'notes', 'invoice_amount', 'invoice_paid_on', 'invoice_payment_method'];
 
     public function members(): BelongsToMany
     {
@@ -32,6 +32,7 @@ class Duty extends Model implements AuditableContract
         return [
             'start' => 'datetime',
             'end' => 'datetime',
+            'invoice_paid_on' => 'date',
         ];
     }
 }

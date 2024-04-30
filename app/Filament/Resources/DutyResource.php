@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\InvoicePaymentMethods;
 use App\Filament\Resources\DutyResource\Pages\CreateDuty;
 use App\Filament\Resources\DutyResource\Pages\EditDuty;
 use App\Filament\Resources\DutyResource\Pages\ListDuties;
 use App\Filament\Resources\DutyResource\Pages\ViewDuty;
 use App\Models\Duty;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Select;
@@ -21,6 +23,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
@@ -65,6 +68,16 @@ class DutyResource extends Resource
                     ->preload()
                     ->multiple()
                     ->label('Vehicles'),
+                Textarea::make('invoice_amount')
+                    ->label('Invoice Amount')
+                    ->nullable(),
+                DatePicker::make('invoice_paid_on')
+                    ->label('Invoice Paid On')
+                    ->nullable(),
+                Select::make('invoice_payment_method')
+                    ->label('Invoice Payment Method')
+                    ->options(InvoicePaymentMethods::class)
+                    ->nullable(),
                 Textarea::make('notes')
                     ->maxLength(65535)
                     ->columnSpanFull(),
@@ -87,6 +100,9 @@ class DutyResource extends Resource
                 TextColumn::make('end')
                     ->dateTime('M d, Y H:i')
                     ->sortable(),
+                IconColumn::make('invoice_paid_on')
+                    ->label('Invoice Paid')
+                    ->boolean(),
             ])
             ->filters([
                 SelectFilter::make('organizer')->options(Duty::query()->get()->pluck('organizer', 'organizer')),
@@ -97,7 +113,7 @@ class DutyResource extends Resource
                                 DateTimePicker::make('from')->default(now()->startOfYear()),
                                 DateTimePicker::make('to')->default(now()->endOfYear()),
                             ])
-                            ->columns(1)
+                            ->columns(1),
                     ])
                     ->query(function (Builder $query, array $data) {
                         return $query
@@ -109,7 +125,7 @@ class DutyResource extends Resource
                                 $data['to'] ?? null,
                                 fn (Builder $query) => $query->whereDate('start', '<=', $data['to'])
                             );
-                    })
+                    }),
             ])
             ->actions([
                 ViewAction::make(),
@@ -125,18 +141,26 @@ class DutyResource extends Resource
                         Column::make('start')->format('Y-m-d H:i'),
                         Column::make('end')->format('Y-m-d H:i'),
                         Column::make('duration')
-                            ->getStateUsing(fn ($record) => round($record->end->diffInMinutes($record->start) / 60)),
+                            ->getStateUsing(fn ($record) => round($record->start->diffInMinutes($record->end) / 60)),
                         Column::make('duty_hours')
-                            ->getStateUsing(fn ($record) => round(($record->end->diffInMinutes($record->start) * $record->members->count()) / 60)),
+                            ->getStateUsing(fn ($record) => round(($record->start->diffInMinutes($record->end) * $record->members->count()) / 60)),
                         Column::make('members')
                             ->heading('Members')
                             ->getStateUsing(fn ($record) => $record->members->pluck('name')->join(', ')),
                         Column::make('vehicles')
                             ->heading('Vehicles')
                             ->getStateUsing(fn ($record) => $record->vehicles->pluck('call_sign')->join(', ')),
+                        Column::make('invoice_amount')
+                            ->heading('Invoice Amount'),
+                        Column::make('invoice_paid_on')
+                            ->heading('Invoice Paid On')
+                            ->getStateUsing(fn ($record) => $record->invoice_paid_on ? $record->invoice_paid_on->format('d/m/Y') : 'Not Paid'),
+                        Column::make('invoice_payment_method')
+                            ->heading('Invoice Payment Method')
+                            ->getStateUsing(fn ($record) => $record->invoice_payment_method ?: 'Not Paid'),
                     ])
                         ->withFilename('Rathdrum OMAC Duties'),
-                ])
+                ]),
             ])
             ->defaultSort('start', 'desc');
     }

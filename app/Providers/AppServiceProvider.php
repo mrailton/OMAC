@@ -9,7 +9,6 @@ use App\Observers\MemberObserver;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Spatie\CpuLoadHealthCheck\CpuLoadCheck;
 use Spatie\Health\Checks\Checks\CacheCheck;
@@ -31,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/';
+    public const string HOME = '/';
 
     /**
      * Register any application services.
@@ -73,7 +72,5 @@ class AppServiceProvider extends ServiceProvider
     public function bootRoute(): void
     {
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip()));
-
-
     }
 }

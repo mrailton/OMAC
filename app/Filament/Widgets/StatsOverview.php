@@ -7,6 +7,7 @@ namespace App\Filament\Widgets;
 use App\Models\Duty;
 use App\Models\Member;
 use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
+use Carbon\CarbonInterval;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -16,7 +17,8 @@ class StatsOverview extends BaseWidget
 
     protected function getStats(): array
     {
-        $dutyHours = 0;
+        $dutyHours = new CarbonInterval();
+
         $duties = Duty::query()
             ->with('members')
             ->whereYear('start', '=', now())
@@ -27,9 +29,7 @@ class StatsOverview extends BaseWidget
             $memberCount = $duty->members()->withTrashed()->count();
 
             if ($memberCount > 0) {
-                $duration = $duty->start->diffInMinutes($duty->end);
-
-                $dutyHours += ($duration * $memberCount) / 60;
+                $dutyHours->add($duty->start->diff($duty->end)->multiply($memberCount));
             }
         }
 
@@ -37,7 +37,7 @@ class StatsOverview extends BaseWidget
             Stat::make('Total Members', Member::query()->count()),
             Stat::make('Active Members', Member::query()->where('active', '=', true)->count()),
             Stat::make('Duties This Year', $duties->count()),
-            Stat::make('Duty Hours This Year', (int) round($dutyHours)),
+            Stat::make('Duty Time This Year (hours:minutes)', $dutyHours->format('%H:%I')),
         ];
     }
 }

@@ -27,7 +27,7 @@ class StatsOverview extends BaseWidget
             $memberCount = $duty->members()->withTrashed()->count();
 
             if ($memberCount > 0) {
-                $duration = $duty->end->diffInMinutes($duty->start);
+                $duration = $duty->start->diffInMinutes($duty->end);
 
                 $dutyHours += ($duration * $memberCount) / 60;
             }

@@ -37,7 +37,7 @@ class StatsOverview extends BaseWidget
             Stat::make('Total Members', Member::query()->count()),
             Stat::make('Active Members', Member::query()->where('active', '=', true)->count()),
             Stat::make('Duties This Year', $duties->count()),
-            Stat::make('Duty Time This Year (hours:minutes)', $dutyHours->format('%H:%i')),
+            Stat::make('Duty Time This Year (hours:minutes)', $dutyHours->hours . ':' . $dutyHours->minutes),
         ];
     }
 }

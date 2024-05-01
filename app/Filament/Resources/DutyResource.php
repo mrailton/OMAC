@@ -141,9 +141,9 @@ class DutyResource extends Resource
                         Column::make('start')->format('Y-m-d H:i'),
                         Column::make('end')->format('Y-m-d H:i'),
                         Column::make('duration')
-                            ->getStateUsing(fn ($record) => $record->start->diff($record->end)->format('%H:%I')),
+                            ->getStateUsing(fn ($record) => $record->start->diff($record->end)->format('%H:%i')),
                         Column::make('duty_hours')
-                            ->getStateUsing(fn ($record) => $record->start->diff($record->end)->multiply($record->members->count())->format('%H:%I')),
+                            ->getStateUsing(fn ($record) => $record->start->diff($record->end)->multiply($record->members->count())->format('%H:%i')),
                         Column::make('members')
                             ->heading('Members')
                             ->getStateUsing(fn ($record) => $record->members->pluck('name')->join(', ')),

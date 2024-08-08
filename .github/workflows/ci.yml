@@ -39,13 +39,3 @@ jobs:
         run: php artisan test --coverage
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
-
-  deploy:
-    runs-on: ubuntu-22.04
-    needs: test
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Deploy
-        uses: Glennmen/ploi-deploy-action@v1.2.0
-        with:
-          webhook_url: ${{ secrets.WEBHOOK_URL }}

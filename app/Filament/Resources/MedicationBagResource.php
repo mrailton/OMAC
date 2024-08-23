@@ -1,16 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Resources;
 
-use App\Enums\PractitionerLevel;
-use App\Filament\Resources\MedicationResource\Pages\CreateMedication;
-use App\Filament\Resources\MedicationResource\Pages\EditMedication;
-use App\Filament\Resources\MedicationResource\Pages\ListMedications;
-use App\Filament\Resources\MedicationResource\Pages\ViewMedication;
-use App\Models\Medication;
-use Filament\Forms\Components\Select;
+use App\Filament\Resources\MedicationBagResource\Pages;
+use App\Filament\Resources\MedicationBagResource\RelationManagers;
+use App\Models\MedicationBag;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -20,9 +14,9 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class MedicationResource extends Resource
+class MedicationBagResource extends Resource
 {
-    protected static ?string $model = Medication::class;
+    protected static ?string $model = MedicationBag::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -35,9 +29,9 @@ class MedicationResource extends Resource
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Select::make('practitioner_level')
+                TextInput::make('location')
                     ->required()
-                    ->options(PractitionerLevel::class)
+                    ->maxLength(255)
             ]);
     }
 
@@ -46,24 +40,23 @@ class MedicationResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('practitioner_level')
-                    ->searchable()
                     ->sortable()
+                    ->searchable(),
+                TextColumn::make('location')
+                    ->sortable()
+                    ->searchable()
             ])
             ->filters([
                 //
             ])
             ->actions([
-                ViewAction::make()
+                ViewAction::make(),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ])
-            ->defaultSort('name');
+            ]);
     }
 
     public static function getRelations(): array
@@ -76,10 +69,10 @@ class MedicationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListMedications::route('/'),
-            'create' => CreateMedication::route('/create'),
-            'view' => ViewMedication::route('/{record}'),
-            'edit' => EditMedication::route('/{record}/edit'),
+            'index' => Pages\ListMedicationBags::route('/'),
+            'create' => Pages\CreateMedicationBag::route('/create'),
+            'view' => Pages\ViewMedicationBag::route('/{record}'),
+            'edit' => Pages\EditMedicationBag::route('/{record}/edit'),
         ];
     }
 }

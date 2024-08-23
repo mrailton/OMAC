@@ -37,11 +37,11 @@ class StatsOverview extends BaseWidget
         $hours = floor($totalDutyMinutes / 60);
         $minutes = $totalDutyMinutes % 60;
 
-        if (strlen((string)$hours) < 2) {
+        if (mb_strlen((string)$hours) < 2) {
             $hours = '0' . $hours;
         }
 
-        if (strlen((string)$minutes) < 2) {
+        if (mb_strlen((string)$minutes) < 2) {
             $minutes = '0' . $minutes;
         }
 

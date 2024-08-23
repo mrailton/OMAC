@@ -6,12 +6,11 @@ namespace App\Enums;
 
 use Filament\Support\Contracts\HasLabel;
 
-enum InvoicePaymentMethods: string implements HasLabel
+enum PractitionerLevel: string implements HasLabel
 {
-    case NA = 'Not Applicable';
-    case CHEQUE = 'Cheque';
-    case CASH = 'Cash';
-    case TRANSFER = 'Bank Transfer';
+    case EMT = 'EMT';
+    case P = 'Paramedic';
+    case AP = 'Advanced Paramedic';
 
     public function getLabel(): string
     {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\MedicationBagResource\RelationManagers;
 
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -16,7 +17,9 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class StockRelationManager extends RelationManager
 {
@@ -49,12 +52,17 @@ class StockRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                TextColumn::make('medication.name'),
+                TextColumn::make('medication.name')
+                    ->sortable(),
                 TextColumn::make('quantity'),
-                TextColumn::make('expiry_date')->date('d/m/Y'),
+                TextColumn::make('expiry_date')->date('d/m/Y')
+                    ->sortable(),
             ])
             ->filters([
-                //
+                Filter::make('Is Expired')
+                    ->query(fn (Builder $query): Builder => $query->where('expiry_date', '<', Carbon::today()))->toggle(),
+                Filter::make('Is In Date')
+                    ->query(fn (Builder $query): Builder => $query->where('expiry_date', '>', Carbon::today()))->toggle(),
             ])
             ->headerActions([
                 CreateAction::make(),
@@ -67,7 +75,10 @@ class StockRelationManager extends RelationManager
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->striped()
+            ->defaultSort('expiry_date')
+            ->paginated(false);
     }
 
     public function isReadOnly(): bool

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\MedicationBagResource\RelationManagers;
 
 use Filament\Forms\Components\DatePicker;
@@ -37,7 +39,7 @@ class StockRelationManager extends RelationManager
                     ->required(),
                 DatePicker::make('expiry_date')
                     ->required(),
-                Textarea::make('notes')
+                Textarea::make('notes'),
             ])
             ->columns(1);
     }
@@ -49,7 +51,7 @@ class StockRelationManager extends RelationManager
             ->columns([
                 TextColumn::make('medication.name'),
                 TextColumn::make('quantity'),
-                TextColumn::make('expiry_date')->date('d/m/Y')
+                TextColumn::make('expiry_date')->date('d/m/Y'),
             ])
             ->filters([
                 //
@@ -72,5 +74,4 @@ class StockRelationManager extends RelationManager
     {
         return false;
     }
-
 }

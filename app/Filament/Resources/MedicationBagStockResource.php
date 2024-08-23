@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MedicationBagStockResource\Pages\CreateMedicationBagStock;
 use App\Filament\Resources\MedicationBagStockResource\Pages\EditMedicationBagStock;
 use App\Filament\Resources\MedicationBagStockResource\Pages\ListMedicationBagStocks;
 use App\Filament\Resources\MedicationBagStockResource\Pages\ViewMedicationBagStock;
-use App\Filament\Resources\MedicationBagStockResource\RelationManagers;
 use App\Models\MedicationBagStock;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;

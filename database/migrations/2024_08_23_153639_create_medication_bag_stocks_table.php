@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Medication;
 use App\Models\MedicationBag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('medication_bag_stocks', function (Blueprint $table) {
+        Schema::create('medication_bag_stocks', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(Medication::class);
             $table->foreignIdFor(MedicationBag::class);

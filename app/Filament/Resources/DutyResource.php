@@ -54,7 +54,7 @@ class DutyResource extends Resource
                     ->seconds(false)
                     ->required()
                     ->live()
-                    ->afterStateUpdated(fn(Set $set, Get $get) => $set('end', $get('start'))),
+                    ->afterStateUpdated(fn (Set $set, Get $get) => $set('end', $get('start'))),
                 DateTimePicker::make('end')
                     ->seconds(false)
                     ->required(),
@@ -119,11 +119,11 @@ class DutyResource extends Resource
                         return $query
                             ->when(
                                 $data['from'] ?? null,
-                                fn(Builder $query) => $query->whereDate('start', '>=', $data['from'])
+                                fn (Builder $query) => $query->whereDate('start', '>=', $data['from'])
                             )
                             ->when(
                                 $data['to'] ?? null,
-                                fn(Builder $query) => $query->whereDate('start', '<=', $data['to'])
+                                fn (Builder $query) => $query->whereDate('start', '<=', $data['to'])
                             );
                     }),
             ])
@@ -143,28 +143,30 @@ class DutyResource extends Resource
                         Column::make('duration')
                             ->getStateUsing(function ($record) {
                                 $totalMinutes = $record->start->diffInMinutes($record->end);
+
                                 return self::getHoursAndMinutes($totalMinutes);
 
                             }),
                         Column::make('duty_hours')
                             ->getStateUsing(function ($record) {
-                                $totalMinutes = (int)$record->start->diffInMinutes($record->end) * $record->members->count();
+                                $totalMinutes = (int) $record->start->diffInMinutes($record->end) * $record->members->count();
+
                                 return self::getHoursAndMinutes($totalMinutes);
                             }),
                         Column::make('members')
                             ->heading('Members')
-                            ->getStateUsing(fn($record) => $record->members->pluck('name')->join(', ')),
+                            ->getStateUsing(fn ($record) => $record->members->pluck('name')->join(', ')),
                         Column::make('vehicles')
                             ->heading('Vehicles')
-                            ->getStateUsing(fn($record) => $record->vehicles->pluck('call_sign')->join(', ')),
+                            ->getStateUsing(fn ($record) => $record->vehicles->pluck('call_sign')->join(', ')),
                         Column::make('invoice_amount')
                             ->heading('Invoice Amount'),
                         Column::make('invoice_paid_on')
                             ->heading('Invoice Paid On')
-                            ->getStateUsing(fn($record) => $record->invoice_paid_on ? $record->invoice_paid_on->format('d/m/Y') : 'Not Paid'),
+                            ->getStateUsing(fn ($record) => $record->invoice_paid_on ? $record->invoice_paid_on->format('d/m/Y') : 'Not Paid'),
                         Column::make('invoice_payment_method')
                             ->heading('Invoice Payment Method')
-                            ->getStateUsing(fn($record) => $record->invoice_payment_method ?: 'Not Paid'),
+                            ->getStateUsing(fn ($record) => $record->invoice_payment_method ?: 'Not Paid'),
                     ])
                         ->withFilename('Rathdrum OMAC Duties'),
                 ]),
@@ -182,20 +184,16 @@ class DutyResource extends Resource
         ];
     }
 
-    /**
-     * @param float|int $totalMinutes
-     * @return string
-     */
     private static function getHoursAndMinutes(float|int $totalMinutes): string
     {
         $hours = floor($totalMinutes / 60);
         $minutes = $totalMinutes % 60;
 
-        if (strlen((string)$hours) < 2) {
+        if (mb_strlen((string) $hours) < 2) {
             $hours = '0' . $hours;
         }
 
-        if (strlen((string)$minutes) < 2) {
+        if (mb_strlen((string) $minutes) < 2) {
             $minutes = '0' . $minutes;
         }
 

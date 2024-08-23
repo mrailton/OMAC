@@ -13,6 +13,8 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MedicationBagResource extends Resource
 {
@@ -62,7 +64,7 @@ class MedicationBagResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\StockRelationManager::class,
         ];
     }
 
@@ -74,5 +76,13 @@ class MedicationBagResource extends Resource
             'view' => Pages\ViewMedicationBag::route('/{record}'),
             'edit' => Pages\EditMedicationBag::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

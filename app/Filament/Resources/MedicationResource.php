@@ -19,6 +19,8 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MedicationResource extends Resource
 {
@@ -26,7 +28,7 @@ class MedicationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Inventory';
+    protected static ?string $navigationGroup = 'System';
 
     public static function form(Form $form): Form
     {
@@ -81,5 +83,13 @@ class MedicationResource extends Resource
             'view' => ViewMedication::route('/{record}'),
             'edit' => EditMedication::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

@@ -39,7 +39,7 @@ class MedicationResource extends Resource
                     ->maxLength(255),
                 Select::make('practitioner_level')
                     ->required()
-                    ->options(PractitionerLevel::class)
+                    ->options(PractitionerLevel::class),
             ]);
     }
 
@@ -52,19 +52,17 @@ class MedicationResource extends Resource
                     ->sortable(),
                 TextColumn::make('practitioner_level')
                     ->searchable()
-                    ->sortable()
-            ])
-            ->filters([
-                //
+                    ->sortable(),
             ])
             ->actions([
-                ViewAction::make()
+                ViewAction::make(),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
             ])
+            ->paginated(false)
             ->defaultSort('name');
     }
 

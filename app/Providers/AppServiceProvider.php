@@ -56,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
                 ->failWhenMoreConnectionsThan(100),
             RedisCheck::new(),
             ScheduleCheck::new()->useCacheStore('omac_healthcheck')->heartbeatMaxAgeInMinutes(3),
-            SecurityAdvisoriesCheck::new(),
+            // SecurityAdvisoriesCheck::new(),
             UsedDiskSpaceCheck::new(),
         ]);
 

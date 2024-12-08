@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Schedule;
+use Spatie\Health\Models\HealthCheckResultHistoryItem;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,4 @@ Schedule::command('backup:clean')->dailyAt('04:15');
 Schedule::command('backup:run')->dailyAt('04:30');
 Schedule::command('report:certificate-expiry')->monthlyOn(1, '12:00');
 Schedule::command('health:schedule-check-heartbeat')->everyMinute();
+Schedule::command('model:prune', ['--model' => [HealthCheckResultHistoryItem::class]])->dailyAt('02:00');

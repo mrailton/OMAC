@@ -22,10 +22,5 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->throttleApi();
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->reportable(function (Throwable $e): void {
-            if (app()->bound('honeybadger')) {
-                app('honeybadger')->notify($e, app('request'));
-            }
-        });
-    })->create();
+    ->withExceptions(function (Exceptions $exceptions): void {})
+    ->create();

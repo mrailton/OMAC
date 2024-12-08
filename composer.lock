@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df6bfe1e92f8510c48046ae3c23202ae",
+    "content-hash": "3015ae86751181f6eb72018e93ea3407",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2464,146 +2464,6 @@
                 }
             ],
             "time": "2023-12-03T19:50:20+00:00"
-        },
-        {
-            "name": "honeybadger-io/honeybadger-laravel",
-            "version": "v4.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/honeybadger-io/honeybadger-laravel.git",
-                "reference": "99b690eb37fdd405f320da3fd780856dee27d617"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/honeybadger-io/honeybadger-laravel/zipball/99b690eb37fdd405f320da3fd780856dee27d617",
-                "reference": "99b690eb37fdd405f320da3fd780856dee27d617",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "honeybadger-io/honeybadger-php": ">=2.21.0",
-                "illuminate/console": "^10.0|^11.0",
-                "illuminate/support": "^10.0|^11.0",
-                "monolog/monolog": "^2.0|^3.2",
-                "php": "^8.1",
-                "sixlive/dotenv-editor": "^1.1|^2.0"
-            },
-            "require-dev": {
-                "larapack/dd": "^1.0",
-                "mockery/mockery": "^1.4",
-                "orchestra/testbench": "^8.0|^9.0",
-                "phpunit/phpunit": "^10.5|^11.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "Honeybadger": "Honeybadger\\HoneybadgerLaravel\\Facades\\Honeybadger"
-                    },
-                    "providers": [
-                        "Honeybadger\\HoneybadgerLaravel\\HoneybadgerServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Honeybadger\\HoneybadgerLaravel\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "TJ Miller",
-                    "email": "oss@tjmiller.co",
-                    "homepage": "https://tjmiller.co",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Honeybadger Laravel integration",
-            "homepage": "https://github.com/honeybadger-io/honeybadger-laravel",
-            "keywords": [
-                "debugging",
-                "errors",
-                "exceptions",
-                "honeybadger-io",
-                "honeybadger-php",
-                "logging",
-                "monitoring"
-            ],
-            "support": {
-                "issues": "https://github.com/honeybadger-io/honeybadger-laravel/issues",
-                "source": "https://github.com/honeybadger-io/honeybadger-laravel/tree/v4.3.0"
-            },
-            "time": "2024-11-01T17:40:40+00:00"
-        },
-        {
-            "name": "honeybadger-io/honeybadger-php",
-            "version": "v2.22.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/honeybadger-io/honeybadger-php.git",
-                "reference": "3f84e54f0739600f8ad7c95fb7684e3b760a527f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/honeybadger-io/honeybadger-php/zipball/3f84e54f0739600f8ad7c95fb7684e3b760a527f",
-                "reference": "3f84e54f0739600f8ad7c95fb7684e3b760a527f",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "guzzlehttp/guzzle": "^6.3|^7.0.1",
-                "monolog/monolog": "^2.0|^3.0",
-                "php": "^7.2|^8.0",
-                "symfony/http-foundation": ">=3.3|^4.1"
-            },
-            "require-dev": {
-                "larapack/dd": "^1.1",
-                "mockery/mockery": "^1.4",
-                "phpunit/phpunit": "^8.5|^9.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Honeybadger\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "TJ Miller",
-                    "email": "oss@tjmiller.co",
-                    "homepage": "https://tjmiller.co",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Honeybadger PHP library",
-            "homepage": "https://github.com/honeybadger-io/honeybadger-php",
-            "keywords": [
-                "debugging",
-                "errors",
-                "exceptions",
-                "honeybadger-io",
-                "honeybadger-php",
-                "logging",
-                "monitoring"
-            ],
-            "support": {
-                "issues": "https://github.com/honeybadger-io/honeybadger-php/issues",
-                "source": "https://github.com/honeybadger-io/honeybadger-php/tree/v2.22.0"
-            },
-            "time": "2024-11-16T16:03:38+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
@@ -6221,59 +6081,6 @@
                 }
             ],
             "time": "2024-12-06T09:30:54+00:00"
-        },
-        {
-            "name": "sixlive/dotenv-editor",
-            "version": "v2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sixlive/dotenv-editor.git",
-                "reference": "c13a1a043887a5c61079bb98dfa32e0583f4aa52"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sixlive/dotenv-editor/zipball/c13a1a043887a5c61079bb98dfa32e0583f4aa52",
-                "reference": "c13a1a043887a5c61079bb98dfa32e0583f4aa52",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.2",
-                "larapack/dd": "^1.0",
-                "phpunit/phpunit": "^9.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "sixlive\\DotenvEditor\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "TJ Miller",
-                    "email": "oss@tjmiller.co",
-                    "homepage": "https://tjmiller.me",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A tool to edit phpdotenv files",
-            "homepage": "https://github.com/sixlive/dotenv-editor",
-            "keywords": [
-                "dotenv",
-                "dotenv-editor",
-                "phpdotenv"
-            ],
-            "support": {
-                "issues": "https://github.com/sixlive/dotenv-editor/issues",
-                "source": "https://github.com/sixlive/dotenv-editor/tree/v2.0.0"
-            },
-            "time": "2021-11-15T13:52:36+00:00"
         },
         {
             "name": "spatie/color",
@@ -10380,6 +10187,84 @@
                 "source": "https://github.com/Jean85/pretty-package-versions/tree/2.1.0"
             },
             "time": "2024-11-18T16:19:46+00:00"
+        },
+        {
+            "name": "laravel/pail",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/pail.git",
+                "reference": "353ac12134b98e2e7c3333d916bd3e523931e583"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/pail/zipball/353ac12134b98e2e7c3333d916bd3e523931e583",
+                "reference": "353ac12134b98e2e7c3333d916bd3e523931e583",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "illuminate/console": "^10.24|^11.0",
+                "illuminate/contracts": "^10.24|^11.0",
+                "illuminate/log": "^10.24|^11.0",
+                "illuminate/process": "^10.24|^11.0",
+                "illuminate/support": "^10.24|^11.0",
+                "nunomaduro/termwind": "^1.15|^2.0",
+                "php": "^8.2",
+                "symfony/console": "^6.0|^7.0"
+            },
+            "require-dev": {
+                "laravel/framework": "^10.24|^11.0",
+                "laravel/pint": "^1.13",
+                "orchestra/testbench-core": "^8.12|^9.0",
+                "pestphp/pest": "^2.20",
+                "pestphp/pest-plugin-type-coverage": "^2.3",
+                "phpstan/phpstan": "^1.10",
+                "symfony/var-dumper": "^6.3|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Pail\\PailServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Pail\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                },
+                {
+                    "name": "Nuno Maduro",
+                    "email": "enunomaduro@gmail.com"
+                }
+            ],
+            "description": "Easily delve into your Laravel application's log files directly from the command line.",
+            "homepage": "https://github.com/laravel/pail",
+            "keywords": [
+                "laravel",
+                "logs",
+                "php",
+                "tail"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/pail/issues",
+                "source": "https://github.com/laravel/pail"
+            },
+            "time": "2024-10-23T12:56:23+00:00"
         },
         {
             "name": "laravel/pint",

@@ -32,7 +32,7 @@ class CertificateExpiryMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.CertificateExpiryMail',
+            markdown: 'mail.certificate-expiry-mail',
             with: ['members' => $this->members],
         );
     }

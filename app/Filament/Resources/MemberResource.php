@@ -24,6 +24,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -157,10 +159,13 @@ class MemberResource extends Resource
                     }),
             ])
             ->actions([
-            ViewAction::make(),
-        ])
+                ViewAction::make(),
+            ])
             ->bulkActions([
-            ExportBulkAction::make('Export with Date Range')
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+                ExportBulkAction::make('Export with Date Range')
                     ->form([
                         DatePicker::make('export_from')->label('From')->default(now()->subYear()),
                         DatePicker::make('export_to')->label('To')->default(now()),
@@ -171,7 +176,7 @@ class MemberResource extends Resource
 
                         return Excel::download(new MemberExport($from, $to), 'Rathdrum OMAC Members Export '.$from.' - '.$to.'.xlsx');
                     }),
-        ]);
+            ]);
     }
 
     public static function getRelations(): array

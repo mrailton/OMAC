@@ -7,7 +7,6 @@ namespace App\Filament\Resources;
 use App\Enums\CFRLevel;
 use App\Enums\ClinicalLevel;
 use App\Enums\Rank;
-use App\Exports\MemberExport;
 use App\Filament\Resources\MemberResource\Pages\CreateMember;
 use App\Filament\Resources\MemberResource\Pages\EditMember;
 use App\Filament\Resources\MemberResource\Pages\ListMembers;
@@ -35,8 +34,6 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Maatwebsite\Excel\Facades\Excel;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class MemberResource extends Resource
 {
@@ -165,17 +162,6 @@ class MemberResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-                ExportBulkAction::make('Export with Date Range')
-                    ->form([
-                        DatePicker::make('export_from')->label('From')->default(now()->subYear()),
-                        DatePicker::make('export_to')->label('To')->default(now()),
-                    ])
-                    ->action(function ($records, array $data) {
-                        $from = $data['export_from'] ?? null;
-                        $to = $data['export_to'] ?? null;
-
-                        return Excel::download(new MemberExport($from, $to), 'Rathdrum OMAC Members Export '.$from.' - '.$to.'.xlsx');
-                    }),
             ]);
     }
 

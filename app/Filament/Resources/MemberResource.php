@@ -7,6 +7,7 @@ namespace App\Filament\Resources;
 use App\Enums\CFRLevel;
 use App\Enums\ClinicalLevel;
 use App\Enums\Rank;
+use App\Exports\MemberExport;
 use App\Filament\Resources\MemberResource\Pages\CreateMember;
 use App\Filament\Resources\MemberResource\Pages\EditMember;
 use App\Filament\Resources\MemberResource\Pages\ListMembers;
@@ -23,10 +24,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\ForceDeleteBulkAction;
-use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -36,13 +33,13 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Maatwebsite\Excel\Facades\Excel;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
-use pxlrbt\FilamentExcel\Columns\Column;
-use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class MemberResource extends Resource
 {
     protected static ?string $model = Member::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
     public static function form(Form $form): Form
@@ -104,12 +101,12 @@ class MemberResource extends Resource
                     ->required(),
                 TextInput::make('driving_license_number')
                     ->label('Driving License Number')
-                    ->visible(fn (Get $get): bool => null !== $get('driver') && $get('driver')),
+                    ->visible(fn (Get $get): bool => $get('driver') !== null && $get('driver')),
                 Select::make('driving_license_classes')
                     ->label('Driving License Classes')
                     ->options(['B', 'C1', 'C', 'D1', 'D', 'BE', 'C1E', 'CE', 'D1E', 'D'])
                     ->multiple()
-                    ->visible(fn (Get $get): bool => null !== $get('driver') && $get('driver')),
+                    ->visible(fn (Get $get): bool => $get('driver') !== null && $get('driver')),
                 FileUpload::make('files')
                     ->label('Member Files')
                     ->multiple()
@@ -141,86 +138,40 @@ class MemberResource extends Resource
             ->defaultSort('name')
             ->filters([
                 TrashedFilter::make(),
-                SelectFilter::make('rank')
-                    ->options(Rank::class)
-                    ->multiple(),
-                SelectFilter::make('cfr_level')
-                    ->options(CFRLevel::class)
-                    ->label('CFR Level'),
-                SelectFilter::make('clinical_level')
-                    ->options(ClinicalLevel::class)
-                    ->label('Clinical Level')
-                    ->multiple(),
-                SelectFilter::make('active')
-                    ->options([0 => 'No', 1 => 'Yes']),
-                SelectFilter::make('driver')
-                    ->options([0 => 'No', 1 => 'Yes']),
+                SelectFilter::make('rank')->options(Rank::class)->multiple(),
+                SelectFilter::make('cfr_level')->options(CFRLevel::class)->label('CFR Level'),
+                SelectFilter::make('clinical_level')->options(ClinicalLevel::class)->label('Clinical Level')->multiple(),
+                SelectFilter::make('active')->options([0 => 'No', 1 => 'Yes']),
+                SelectFilter::make('driver')->options([0 => 'No', 1 => 'Yes']),
                 Filter::make('join_date')
                     ->form([
-                        Fieldset::make('Join Date')
-                            ->schema([
-                                DatePicker::make('from'),
-                                DatePicker::make('to'),
-                            ])
-                            ->columns(1),
+                        Fieldset::make('Join Date')->schema([
+                            DatePicker::make('from'),
+                            DatePicker::make('to'),
+                        ])->columns(1),
                     ])
                     ->query(function (Builder $query, array $data) {
                         return $query
-                            ->when(
-                                $data['from'] ?? null,
-                                fn (Builder $query) => $query->whereDate('join_date', '>=', $data['from'])
-                            )
-                            ->when(
-                                $data['to'] ?? null,
-                                fn (Builder $query) => $query->whereDate('join_date', '<=', $data['to'])
-                            );
+                            ->when($data['from'] ?? null, fn (Builder $query) => $query->whereDate('join_date', '>=', $data['from']))
+                            ->when($data['to'] ?? null, fn (Builder $query) => $query->whereDate('join_date', '<=', $data['to']));
                     }),
             ])
             ->actions([
-                ViewAction::make(),
-            ])
+            ViewAction::make(),
+        ])
             ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
-                ]),
-                ExportBulkAction::make()->exports([
-                    ExcelExport::make()->withColumns([
-                        Column::make('name'),
-                        Column::make('active'),
-                        Column::make('driver'),
-                        Column::make('trainings_attended')
-                            ->getStateUsing(fn ($record) => $record->trainingSessions->count()),
-                        Column::make('duties_attended')
-                            ->getStateUsing(fn ($record) => $record->duties->count()),
-                        Column::make('duty_hours')
-                            ->getStateUsing(function ($record) {
-                                $totalMins = 0;
-
-                                foreach ($record->duties as $duty) {
-                                    $totalMins += $duty->end->diffInMinutes($duty->start);
-                                }
-
-                                return round($totalMins / 60);
-                            }),
-                        Column::make('omac_id_number'),
-                        Column::make('email'),
-                        Column::make('phone'),
-                        Column::make('rank'),
-                        Column::make('clinical_level'),
-                        Column::make('cert_number'),
-                        Column::make('cert_expires_on'),
-                        Column::make('cfr_level'),
-                        Column::make('cfr_cert_number'),
-                        Column::make('cfr_expires_on'),
-                        Column::make('garda_vetting_id'),
-                        Column::make('garda_vetting_date'),
-                        Column::make('cpap_date')
+            ExportBulkAction::make('Export with Date Range')
+                    ->form([
+                        DatePicker::make('export_from')->label('From')->default(now()->subYear()),
+                        DatePicker::make('export_to')->label('To')->default(now()),
                     ])
-                        ->withFilename('Rathdrum OMAC Members'),
-                ])
-            ]);
+                    ->action(function ($records, array $data) {
+                        $from = $data['export_from'] ?? null;
+                        $to = $data['export_to'] ?? null;
+
+                        return Excel::download(new MemberExport($from, $to), 'Rathdrum OMAC Members Export '.$from.' - '.$to.'.xlsx');
+                    }),
+        ]);
     }
 
     public static function getRelations(): array

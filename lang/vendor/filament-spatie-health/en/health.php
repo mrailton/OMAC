@@ -20,5 +20,8 @@ return [
             ],
         ],
     ],
-
+    'navigation' => [
+        'group' => 'System',
+        'label' => 'Application Health',
+    ],
 ];

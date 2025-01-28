@@ -22,7 +22,7 @@ sudo systemctl restart php8.4-fpm.service
 php artisan optimize:clear
 php artisan config:cache
 php artisan route:cache
-php artusan event:cache
+php artisan event:cache
 php artisan migrate --force
 php artisan queue:restart
 

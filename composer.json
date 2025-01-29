@@ -5,6 +5,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
+        "aws/aws-sdk-php": "3.336.9",
         "bezhansalleh/filament-shield": "^3.0",
         "croustibat/filament-jobs-monitor": "^2.3",
         "filament/filament": "^3.2",

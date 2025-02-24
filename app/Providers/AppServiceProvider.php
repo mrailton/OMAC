@@ -45,21 +45,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Health::checks([
-            OptimizedAppCheck::new(),
-            CacheCheck::new(),
-            CpuLoadCheck::new()
-                ->failWhenLoadIsHigherInTheLast5Minutes(3.0)
-                ->failWhenLoadIsHigherInTheLast15Minutes(2.5),
-            DatabaseCheck::new(),
-            DatabaseConnectionCountCheck::new()
-                ->failWhenMoreConnectionsThan(100),
-            RedisCheck::new(),
-            ScheduleCheck::new()->useCacheStore('omac_healthcheck')->heartbeatMaxAgeInMinutes(3),
-            // SecurityAdvisoriesCheck::new(),
-            UsedDiskSpaceCheck::new(),
-        ]);
-
         $this->bootEvent();
         $this->bootRoute();
     }

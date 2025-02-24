@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Backups;
-use App\Filament\Pages\HealthCheckResults;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 use Filament\Http\Middleware\Authenticate;
@@ -23,7 +22,6 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
-use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
 use TomatoPHP\FilamentUsers\FilamentUsersPlugin;
 
 class DashboardPanelProvider extends PanelProvider
@@ -65,7 +63,6 @@ class DashboardPanelProvider extends PanelProvider
             ->plugins([
                 FilamentShieldPlugin::make(),
                 FilamentSpatieLaravelBackupPlugin::make()->usingPage(Backups::class),
-                FilamentSpatieLaravelHealthPlugin::make()->usingPage(HealthCheckResults::class),
                 FilamentJobsMonitorPlugin::make(),
                 FilamentUsersPlugin::make(),
             ]);

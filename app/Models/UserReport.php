@@ -11,7 +11,7 @@ class UserReport extends Model
 {
     protected $fillable = ['user_id', 'report'];
 
-    public function user(): BelongsTo#
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }

@@ -41,6 +41,8 @@ class MemberResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
+    protected static ?int $navigationSort = 1;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -100,12 +102,12 @@ class MemberResource extends Resource
                     ->required(),
                 TextInput::make('driving_license_number')
                     ->label('Driving License Number')
-                    ->visible(fn (Get $get): bool => $get('driver') !== null && $get('driver')),
+                    ->visible(fn (Get $get): bool => null !== $get('driver') && $get('driver')),
                 Select::make('driving_license_classes')
                     ->label('Driving License Classes')
                     ->options(['B', 'C1', 'C', 'D1', 'D', 'BE', 'C1E', 'CE', 'D1E', 'D'])
                     ->multiple()
-                    ->visible(fn (Get $get): bool => $get('driver') !== null && $get('driver')),
+                    ->visible(fn (Get $get): bool => null !== $get('driver') && $get('driver')),
                 FileUpload::make('files')
                     ->label('Member Files')
                     ->multiple()
@@ -149,11 +151,9 @@ class MemberResource extends Resource
                             DatePicker::make('to'),
                         ])->columns(1),
                     ])
-                    ->query(function (Builder $query, array $data) {
-                        return $query
-                            ->when($data['from'] ?? null, fn (Builder $query) => $query->whereDate('join_date', '>=', $data['from']))
-                            ->when($data['to'] ?? null, fn (Builder $query) => $query->whereDate('join_date', '<=', $data['to']));
-                    }),
+                    ->query(fn (Builder $query, array $data) => $query
+                        ->when($data['from'] ?? null, fn (Builder $query) => $query->whereDate('join_date', '>=', $data['from']))
+                        ->when($data['to'] ?? null, fn (Builder $query) => $query->whereDate('join_date', '<=', $data['to']))),
             ])
             ->actions([
                 ViewAction::make(),

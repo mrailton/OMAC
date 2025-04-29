@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exports;
 
 use App\Models\Member;
@@ -11,7 +13,9 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class MemberExport implements FromCollection, ShouldAutoSize, WithHeadings, WithMapping
 {
-    public function __construct(protected $from = null, protected $to = null) {}
+    public function __construct(protected $from = null, protected $to = null)
+    {
+    }
 
     public function collection(): Collection
     {
@@ -22,17 +26,17 @@ class MemberExport implements FromCollection, ShouldAutoSize, WithHeadings, With
             ->get();
 
         $trashedMembers = Member::onlyTrashed()
-            ->whereHas('trainingSessions', function ($query) {
+            ->whereHas('trainingSessions', function ($query): void {
                 $query->whereBetween('date', [$this->from, $this->to]);
             })
-            ->orWhereHas('duties', function ($query) {
+            ->orWhereHas('duties', function ($query): void {
                 $query->whereBetween('start', [$this->from, $this->to]);
             })
             ->get();
 
         $members = $members->merge($trashedMembers)->sortBy('name');
 
-        $members->each(function ($member) {
+        $members->each(function ($member): void {
             $member->trainings_attended = $member->trainingSessions()
                 ->whereBetween('date', [$this->from, $this->to])
                 ->count();

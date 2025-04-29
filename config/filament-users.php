@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     /**
      * ---------------------------------------------
@@ -57,7 +59,7 @@ return [
      * ---------------------------------------------
      * if you when to custom the user model path
      */
-    'model' => \App\Models\User::class,
+    'model' => App\Models\User::class,
 
     /**
      * ---------------------------------------------
@@ -65,7 +67,7 @@ return [
      * ---------------------------------------------
      * if you when to custom the team model path
      */
-    'team_model' => \App\Models\Team::class,
+    'team_model' => App\Models\Team::class,
 
     /**
      * ---------------------------------------------
@@ -73,7 +75,7 @@ return [
      * ---------------------------------------------
      * if you when to custom the role model path
      */
-    'roles_model' => \Spatie\Permission\Models\Role::class,
+    'roles_model' => Spatie\Permission\Models\Role::class,
 
     /**
      * ---------------------------------------------
@@ -83,22 +85,22 @@ return [
      */
     'resource' => [
         'table' => [
-            'class' => \TomatoPHP\FilamentUsers\Resources\UserResource\Table\UserTable::class,
-            'filters' => \TomatoPHP\FilamentUsers\Resources\UserResource\Table\UserFilters::class,
-            'actions' => \TomatoPHP\FilamentUsers\Resources\UserResource\Table\UserActions::class,
-            'bulkActions' => \TomatoPHP\FilamentUsers\Resources\UserResource\Table\UserBulkActions::class,
+            'class' => TomatoPHP\FilamentUsers\Resources\UserResource\Table\UserTable::class,
+            'filters' => TomatoPHP\FilamentUsers\Resources\UserResource\Table\UserFilters::class,
+            'actions' => TomatoPHP\FilamentUsers\Resources\UserResource\Table\UserActions::class,
+            'bulkActions' => TomatoPHP\FilamentUsers\Resources\UserResource\Table\UserBulkActions::class,
         ],
         'form' => [
-            'class' => \TomatoPHP\FilamentUsers\Resources\UserResource\Form\UserForm::class,
+            'class' => TomatoPHP\FilamentUsers\Resources\UserResource\Form\UserForm::class,
         ],
         'infolist' => [
-            'class' => \TomatoPHP\FilamentUsers\Resources\UserResource\Infolist\UserInfoList::class,
+            'class' => TomatoPHP\FilamentUsers\Resources\UserResource\Infolist\UserInfoList::class,
         ],
         'pages' => [
-            'list' => \TomatoPHP\FilamentUsers\Resources\UserResource\Actions\ManageUserActions::class,
-            'create' => \TomatoPHP\FilamentUsers\Resources\UserResource\Actions\CreatePageActions::class,
-            'edit' => \TomatoPHP\FilamentUsers\Resources\UserResource\Actions\EditPageActions::class,
-            'view' => \TomatoPHP\FilamentUsers\Resources\UserResource\Actions\ViewPageActions::class,
+            'list' => TomatoPHP\FilamentUsers\Resources\UserResource\Actions\ManageUserActions::class,
+            'create' => TomatoPHP\FilamentUsers\Resources\UserResource\Actions\CreatePageActions::class,
+            'edit' => TomatoPHP\FilamentUsers\Resources\UserResource\Actions\EditPageActions::class,
+            'view' => TomatoPHP\FilamentUsers\Resources\UserResource\Actions\ViewPageActions::class,
         ],
     ],
 ];

@@ -27,6 +27,8 @@ class TrainingSessionsResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -60,17 +62,15 @@ class TrainingSessionsResource extends Resource
                             ])
                             ->columns(1),
                     ])
-                    ->query(function (Builder $query, array $data) {
-                        return $query
-                            ->when(
-                                $data['from'] ?? null,
-                                fn (Builder $query) => $query->whereDate('date', '>=', $data['from'])
-                            )
-                            ->when(
-                                $data['to'] ?? null,
-                                fn (Builder $query) => $query->whereDate('date', '<=', $data['to'])
-                            );
-                    }),
+                    ->query(fn (Builder $query, array $data) => $query
+                        ->when(
+                            $data['from'] ?? null,
+                            fn (Builder $query) => $query->whereDate('date', '>=', $data['from'])
+                        )
+                        ->when(
+                            $data['to'] ?? null,
+                            fn (Builder $query) => $query->whereDate('date', '<=', $data['to'])
+                        )),
             ])
             ->actions([
                 ViewAction::make(),

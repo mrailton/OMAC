@@ -209,16 +209,14 @@ class RoleResource extends Resource implements HasShieldPermissions
 
         return collect(FilamentShield::getResources())
             ->sortKeys()
-            ->map(function ($entity) {
-                return Forms\Components\Section::make(FilamentShield::getLocalizedResourceLabel($entity['fqcn']))
-                    ->description(fn () => new HtmlString('<span style="word-break: break-word;">' . Utils::showModelPath($entity['fqcn']) . '</span>'))
-                    ->compact()
-                    ->schema([
-                        static::getCheckBoxListComponentForResource($entity),
-                    ])
-                    ->columnSpan(FilamentShieldPlugin::get()->getSectionColumnSpan())
-                    ->collapsible();
-            })
+            ->map(fn ($entity) => Forms\Components\Section::make(FilamentShield::getLocalizedResourceLabel($entity['fqcn']))
+                ->description(fn () => new HtmlString('<span style="word-break: break-word;">' . Utils::showModelPath($entity['fqcn']) . '</span>'))
+                ->compact()
+                ->schema([
+                    static::getCheckBoxListComponentForResource($entity),
+                ])
+                ->columnSpan(FilamentShieldPlugin::get()->getSectionColumnSpan())
+                ->collapsible())
             ->toArray();
     }
 

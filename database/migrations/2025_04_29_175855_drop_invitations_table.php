@@ -11,6 +11,6 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::dropIfExists('health_check_result_history_items');
+        Schema::dropIfExists('invitations');
     }
 };

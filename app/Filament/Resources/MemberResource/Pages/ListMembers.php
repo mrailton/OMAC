@@ -30,7 +30,7 @@ class ListMembers extends ListRecords
                     $from = $data['export_from'] ?? null;
                     $to = $data['export_to'] ?? null;
 
-                    return Excel::download(new MemberExport($from, $to), 'Rathdrum OMAC Members Export '.$from.' - '.$to.'.xlsx');
+                    return Excel::download(new MemberExport($from, $to), 'Rathdrum OMAC Members Export ' . $from . ' - ' . $to . '.xlsx');
                 }),
         ];
     }

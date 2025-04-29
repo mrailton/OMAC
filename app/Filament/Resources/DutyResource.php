@@ -39,6 +39,8 @@ class DutyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
+    protected static ?int $navigationSort = 3;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -115,17 +117,15 @@ class DutyResource extends Resource
                             ])
                             ->columns(1),
                     ])
-                    ->query(function (Builder $query, array $data) {
-                        return $query
-                            ->when(
-                                $data['from'] ?? null,
-                                fn (Builder $query) => $query->whereDate('start', '>=', $data['from'])
-                            )
-                            ->when(
-                                $data['to'] ?? null,
-                                fn (Builder $query) => $query->whereDate('start', '<=', $data['to'])
-                            );
-                    }),
+                    ->query(fn (Builder $query, array $data) => $query
+                        ->when(
+                            $data['from'] ?? null,
+                            fn (Builder $query) => $query->whereDate('start', '>=', $data['from'])
+                        )
+                        ->when(
+                            $data['to'] ?? null,
+                            fn (Builder $query) => $query->whereDate('start', '<=', $data['to'])
+                        )),
             ])
             ->actions([
                 ViewAction::make(),

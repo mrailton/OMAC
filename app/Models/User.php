@@ -15,7 +15,7 @@ use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser, AuditableContract
+class User extends Authenticatable implements AuditableContract, FilamentUser
 {
     use Auditable;
     use HasApiTokens;

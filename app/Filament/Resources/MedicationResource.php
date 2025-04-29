@@ -28,7 +28,7 @@ class MedicationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'System';
+    protected static ?string $navigationGroup = 'Inventory';
 
     public static function form(Form $form): Form
     {

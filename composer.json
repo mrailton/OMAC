@@ -7,7 +7,6 @@
         "php": "^8.4",
         "aws/aws-sdk-php": "3.336.9",
         "bezhansalleh/filament-shield": "^3.0",
-        "croustibat/filament-jobs-monitor": "^2.3",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^11.5",
@@ -18,13 +17,10 @@
         "owen-it/laravel-auditing": "^13.6",
         "pxlrbt/filament-excel": "^2.1",
         "shuvroroy/filament-spatie-laravel-backup": "^2.0",
-        "spatie/cpu-load-health-check": "^1.0",
         "spatie/laravel-backup": "^8.6",
-        "spatie/security-advisories-health-check": "^1.1",
         "stechstudio/filament-impersonate": "^3.15",
         "tapp/filament-auditing": "^3.0",
-        "tomatophp/filament-users": "^2.0",
-        "torann/geoip": "^3.0"
+        "tomatophp/filament-users": "^2.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

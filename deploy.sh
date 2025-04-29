@@ -24,6 +24,7 @@ php artisan config:cache
 php artisan route:cache
 php artisan event:cache
 php artisan migrate --force
+php artisan db:seed --class=ShieldSeeder
 php artisan queue:restart
 
 # Bring the app back up

@@ -26,11 +26,11 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo
           coverage: pcov
 
-      - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-interaction
-
       - name: Copy Env File
         run: cp .env.example .env
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction
 
       - name: Generate App Key
         run: php artisan key:generate

@@ -10,7 +10,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: omac_test
+          MYSQL_DATABASE: testing
           options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         ports:
           - 3306:3306
@@ -27,7 +27,7 @@ jobs:
           coverage: pcov
 
       - name: Copy Env File
-        run: cp .env.example .env
+        run: cp .env.test .env
 
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-interaction

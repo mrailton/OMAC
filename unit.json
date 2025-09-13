@@ -1,10 +1,10 @@
 {
     "listeners": {
-        "*:8000": {
+        "*:80": {
             "pass": "routes",
             "forwarded": {
                 "protocol": "X-Forwarded-Proto",
-                "source": ["<Load balancer IP, Subnet etc.>"]
+                "source": ["0.0.0.0/0", "::/0"]
             }
         }
     },

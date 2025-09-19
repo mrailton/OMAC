@@ -5,6 +5,11 @@ ENV PHP_OPCACHE_ENABLE=1
 
 USER root
 
+RUN apt-get update && \
+    apt-get install -y mysql-client && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN install-php-extensions pcntl opcache pdo pdo_mysql intl zip gd exif ftp bcmath
 
 USER www-data

@@ -29,7 +29,11 @@ RUN chown -R unit:unit storage bootstrap/cache && chmod -R 775 storage bootstrap
 RUN composer install --prefer-dist --optimize-autoloader --no-interaction
 
 COPY unit.json /docker-entrypoint.d/unit.json
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
 
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["unitd", "--no-daemon"]
+

@@ -5,7 +5,7 @@ FROM php:8.4-fpm-alpine
 WORKDIR /var/www/html
 
 # Install system dependencies
-RUN apk add --no-cache git curl libpng-dev libxml2-dev zip unzip oniguruma-dev libzip-dev freetype-dev libjpeg-turbo-dev mysql-client
+RUN apk add --no-cache git curl libpng-dev libxml2-dev zip unzip oniguruma-dev libzip-dev freetype-dev libjpeg-turbo-dev mysql-client icu-dev
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd intl zip opcache

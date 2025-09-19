@@ -1,0 +1,30 @@
+{
+    "scripts": {
+        "dokku": {
+            "predeploy": "php /var/www/html/artisan optimize:clear",
+            "postdeploy": "php /var/www/html/artisan optimize"
+        },
+        "postdeploy": ""
+    },
+    "healthchecks": {
+        "web": [
+            {
+                "name": "app-health",
+                "description": "Checking if the laravel app container is up and running.",
+                "type": "startup",
+                "port": 8080,
+                "uptime": 10,
+                "timeout": 20
+            }
+        ],
+        "scheduler": [
+            {
+                "name": "scheduler-health",
+                "description": "Checking if the laravel scheduler container is up and running.",
+                "type": "startup",
+                "command": ["php", "/var/www/html/artisan", "schedule:test", "--name=inspire"],
+                "timeout": 10
+            }
+        ]
+    }
+}

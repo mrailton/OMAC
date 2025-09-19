@@ -6,7 +6,7 @@ ENV PHP_OPCACHE_ENABLE=1
 USER root
 
 RUN apt-get update && \
-    apt-get install -y mysql-client && \
+    apt-get install -y default-mysql-client && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

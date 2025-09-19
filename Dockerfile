@@ -1,23 +1,73 @@
-# Use PHP 8.4 FPM Alpine for smaller image size
-FROM php:8.4-fpm-alpine
+# Build stage for dependencies
+FROM php:8.4-fpm-alpine AS builder
 
-# Set working directory
-WORKDIR /var/www/html
-
-# Install system dependencies
-RUN apk add --no-cache git curl libpng-dev libxml2-dev zip unzip oniguruma-dev libzip-dev freetype-dev libjpeg-turbo-dev mysql-client icu-dev
+# Install system dependencies needed for building
+RUN apk add --no-cache \
+    git \
+    curl \
+    libpng-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    oniguruma-dev \
+    libzip-dev \
+    freetype-dev \
+    libjpeg-turbo-dev \
+    icu-dev \
+    $PHPIZE_DEPS
 
 # Install PHP extensions
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd intl zip opcache
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) \
+        pdo_mysql \
+        mbstring \
+        exif \
+        pcntl \
+        bcmath \
+        gd \
+        intl \
+        zip \
+        opcache
 
 # Install Redis extension
-RUN apk add --no-cache $PHPIZE_DEPS && pecl install redis && docker-php-ext-enable redis && apk del $PHPIZE_DEPS
+RUN pecl install redis && docker-php-ext-enable redis
 
 # Copy composer from official image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy composer files first for better caching
+COPY composer.json composer.lock ./
+
+# Install PHP dependencies (this layer will be cached unless composer files change)
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress --prefer-dist --no-scripts
+
+# Production stage
+FROM php:8.4-fpm-alpine AS production
+
+# Install only runtime dependencies
+RUN apk add --no-cache \
+    curl \
+    libpng \
+    libxml2 \
+    zip \
+    libzip \
+    freetype \
+    libjpeg-turbo \
+    icu \
+    mysql-client
+
+# Copy PHP extensions from builder
+COPY --from=builder /usr/local/lib/php/extensions/ /usr/local/lib/php/extensions/
+COPY --from=builder /usr/local/etc/php/conf.d/ /usr/local/etc/php/conf.d/
+
 # Create www user and set permissions
 RUN addgroup -g 1000 -S www && adduser -u 1000 -D -S -G www www
+
+# Set working directory
+WORKDIR /var/www/html
 
 # PHP production configuration
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
@@ -48,11 +98,11 @@ session.cookie_secure = 1
 session.use_strict_mode = 1
 EOF
 
-# Copy application files
-COPY . .
+# Copy vendor directory from builder stage
+COPY --from=builder /var/www/html/vendor ./vendor
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress --prefer-dist
+# Copy application files (this should be last for better caching)
+COPY . .
 
 # Create startup script
 COPY <<'EOF' /usr/local/bin/start.sh

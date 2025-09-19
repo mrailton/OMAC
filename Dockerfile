@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN install-php-extensions pcntl opcache pdo pdo_mysql intl zip gd exif ftp bcmath
+RUN install-php-extensions intl gd exif ftp bcmath
 
 USER www-data
 

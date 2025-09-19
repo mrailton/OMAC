@@ -5,7 +5,7 @@ ENV PHP_OPCACHE_ENABLE=1
 
 USER root
 
-RUN install-php-extensions exif
+RUN install-php-extensions pcntl opcache pdo pdo_mysql intl zip gd exif ftp bcmath
 
 USER www-data
 

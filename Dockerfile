@@ -1,6 +1,7 @@
 FROM serversideup/php:8.4-unit
 
 ENV SSL_MODE=mixed
+ENV PHP_OPCACHE_ENABLE=1
 
 USER root
 

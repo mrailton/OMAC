@@ -53,8 +53,6 @@ RUN composer run-script post-autoload-dump --no-interaction
 
 # Copy configuration files
 COPY unit.json /docker-entrypoint.d/unit.json
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
 
@@ -62,6 +60,4 @@ EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl -f http://localhost/ || exit 1
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["unitd", "--no-daemon"]
-
+CMD ["sh", "-c", "php artisan migrate --force && php artisan optimize:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan optimize && unitd --no-daemon"]
